@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ถ้าต้องการเริ่มต้นใช้งาน ให้ cd เข้ามาใน Project directory frontend 
 
-### cd ./frontend
+ `cd ./frontend`
 และทำการใช้ Command 
 `npm install` หรือ `npm i` 
 
