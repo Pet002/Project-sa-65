@@ -12,3 +12,5 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 เพื่อเริ่มติดตั้ง node_module
 แล้วจึง `npm start` เพื่อ run in development
+
+หลังจากนั้น สู้ๆนะครับ โค้ดได้เลย 
