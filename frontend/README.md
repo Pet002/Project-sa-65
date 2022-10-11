@@ -8,11 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### cd ./frontend
 และทำการใช้ Command 
-`npm install` 
-
-หรือ
-
-`npm i` 
+`npm install` หรือ `npm i` 
 
 เพื่อเริ่มติดตั้ง node_module
-แล้วจึง npm start เพื่อ run in development
+แล้วจึง `npm start` เพื่อ run in development
