@@ -17,16 +17,16 @@ type JwtWrapper struct {
 type JwtClaims struct {
 	Authorized bool
 	Exp        uint
-	Role_id    uint
+	Role_name  string
 	User_id    uint
 }
 
-func (j *JwtWrapper) GenerateToken(userID uint, roleID uint) (signedToken string, err error) {
+func (j *JwtWrapper) GenerateToken(userID uint, roleName string) (signedToken string, err error) {
 
 	claims := jwt.MapClaims{}
 	claims["authorized"] = true
 	claims["user_id"] = userID
-	claims["role_id"] = roleID
+	claims["role_name"] = roleName
 	claims["exp"] = time.Now().Add(time.Hour * time.Duration(j.ExpirationHour)).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, err = token.SignedString([]byte(j.SecretKey))
