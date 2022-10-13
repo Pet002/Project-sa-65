@@ -1,7 +1,9 @@
 package main
 
 import (
+	"github.com/Pet002/Project-sa-65/controller"
 	"github.com/Pet002/Project-sa-65/entity"
+	"github.com/Pet002/Project-sa-65/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,4 +32,84 @@ func CORSMiddleware() gin.HandlerFunc {
 
 func main() {
 	entity.SetupDatabase()
+
+	r := gin.Default()
+	r.Use(CORSMiddleware())
+
+	//Route API
+
+	//admin part
+	adminApi := r.Group("/admin")
+	{
+		protected := adminApi.Use(middlewares.AuthorizedAdmin())
+		{
+			//role
+			protected.GET("/roles", controller.ListRoles)
+			protected.GET("/role/:id", controller.GetRole)
+			protected.POST("/role", controller.CreateRole)
+			protected.PATCH("/role", controller.UpdateRole)
+			protected.DELETE("/role/:id", controller.DeleteRole)
+
+			//login
+			//Don't have post because we will create login when create employee (1 - 1 relations)
+			protected.GET("/logins", controller.ListLogin)
+			protected.GET("/login/:id", controller.GetLogin)
+			protected.PATCH("/login", controller.UpdateLogin)
+			protected.DELETE("/login/:id", controller.DeleteLogin)
+
+			//employee
+			protected.GET("/employees", controller.ListEmployee)
+			protected.GET("/employee/:id", controller.GetEmployee)
+			protected.POST("/employee", controller.CreateEmployee)
+			protected.PATCH("/employee", controller.UpdateEmployee)
+			protected.DELETE("/employee/:id", controller.DeleteEmployee)
+		}
+	}
+
+	//intendant (roleName intendant)
+	intendantApi := r.Group("/medicine")
+	{
+		protected := intendantApi.Use(middlewares.AuthorizedIntendant())
+		{
+			//พี่เป้ กับ พี่ปาล์ม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
+			protected.GET("/employee/:id", controller.GetEmployee)
+
+		}
+	}
+
+	//pharmacist (roleName pharmacist)
+	pharmacistApi := r.Group("/phamacist")
+	{
+		protected := pharmacistApi.Use(middlewares.AuthorizedPharmacist())
+		{
+			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
+			protected.GET("/employee/:id", controller.GetEmployee)
+
+		}
+	}
+
+	//pharmacist (roleName pharmacist)
+	paymentApi := r.Group("/payment")
+	{
+		protected := paymentApi.Use(middlewares.AuthorizedPharmacist())
+		{
+			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
+			protected.GET("/employee/:id", controller.GetEmployee)
+
+		}
+	}
+
+	//all user login can use
+	api := r.Group("")
+	{
+		protected := api.Use(middlewares.Authorized())
+		{
+			protected.GET("/employee/:id", controller.GetEmployee)
+		}
+	}
+
+	//For signin (Auth Route)
+	r.POST("/signin", controller.Signin)
+
+	r.Run()
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Authorized() gin.HandlerFunc {
+func AuthorizedPharmacist() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		clientToken := c.Request.Header.Get("Authorization")
 		if clientToken == "" {
@@ -35,6 +35,13 @@ func Authorized() gin.HandlerFunc {
 		claims, err := jwtWrapper.ValidateToken(clientToken)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		if claims.Role_name != "pharmacist" {
+			c.JSON(http.StatusBadGateway, gin.H{
 				"error": err.Error(),
 			})
 			return
