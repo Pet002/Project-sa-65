@@ -1,0 +1,6 @@
+.from-box{
+    left: 0vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
