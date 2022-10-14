@@ -94,7 +94,7 @@ func Validation(c *gin.Context) {
 	if len(extractedToken) == 2 {
 		clientToken = strings.TrimSpace(extractedToken[1])
 	} else {
-		c.JSON(http.StatusBadGateway, gin.H{"error": "Incorrect Format of Authorization Token"})
+		c.JSON(http.StatusBadGateway, gin.H{"error": "Incorrect Format of Authorization Token", "len": extractedToken})
 		return
 	}
 

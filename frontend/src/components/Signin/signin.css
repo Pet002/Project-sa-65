@@ -4,3 +4,33 @@
     display: flex;
     flex-direction: row;
 }
+
+.form-page{
+    width: 71vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.from-frame{
+    width: 30vw;
+
+}
+
+
+
+
+.form-in{
+    display: flex;
+    flex-direction: column;
+    gap:10px
+}
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit {
+    margin: 2rem;
+}
