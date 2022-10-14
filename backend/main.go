@@ -93,7 +93,7 @@ func main() {
 	{
 		protected := paymentApi.Use(middlewares.AuthorizedPharmacist())
 		{
-			//พี่ก็อต เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /phamacist/(...Route)
+			//พี่ก็อต เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /payment/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
 
 		}
