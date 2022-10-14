@@ -82,18 +82,18 @@ func main() {
 	{
 		protected := pharmacistApi.Use(middlewares.AuthorizedPharmacist())
 		{
-			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
+			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /phamacist/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
 
 		}
 	}
 
-	//pharmacist (roleName pharmacist)
+	//payment (roleName payment)
 	paymentApi := r.Group("/payment")
 	{
 		protected := paymentApi.Use(middlewares.AuthorizedPharmacist())
 		{
-			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
+			//พี่ก็อต เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /payment/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
 
 		}
