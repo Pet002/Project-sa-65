@@ -88,7 +88,7 @@ func main() {
 		}
 	}
 
-	//pharmacist (roleName pharmacist)
+	//payment (roleName payment)
 	paymentApi := r.Group("/payment")
 	{
 		protected := paymentApi.Use(middlewares.AuthorizedPharmacist())
