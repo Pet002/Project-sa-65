@@ -111,5 +111,8 @@ func main() {
 	//For signin (Auth Route)
 	r.POST("/signin", controller.Signin)
 
+	//for check token
+	r.GET("/valid", controller.Validation)
+
 	r.Run()
 }

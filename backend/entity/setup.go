@@ -36,21 +36,6 @@ func SetupDatabase() {
 	}
 	db.Model(&Role{}).Create(&role)
 
-	role = Role{
-		Name: "intendant",
-	}
-	db.Model(&Role{}).Create(&role)
-
-	role = Role{
-		Name: "pharmacist",
-	}
-	db.Model(&Role{}).Create(&role)
-
-	role = Role{
-		Name: "payment",
-	}
-	db.Model(&Role{}).Create(&role)
-
 	login := Login{
 		User:     "Admin",
 		Password: string(password),
@@ -65,5 +50,20 @@ func SetupDatabase() {
 			Role:    role,
 		})
 	}
+
+	role = Role{
+		Name: "intendant",
+	}
+	db.Model(&Role{}).Create(&role)
+
+	role = Role{
+		Name: "pharmacist",
+	}
+	db.Model(&Role{}).Create(&role)
+
+	role = Role{
+		Name: "payment",
+	}
+	db.Model(&Role{}).Create(&role)
 
 }
