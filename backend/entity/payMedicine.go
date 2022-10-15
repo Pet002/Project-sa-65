@@ -18,7 +18,7 @@ type MedicineLabel struct {
 
 type Perscription struct {
 	gorm.Model
-	CaseTime time.Time
+	CaseTime time.Time `valid:"past"`
 
 	Symptom  string
 	Medicine string
