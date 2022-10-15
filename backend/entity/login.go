@@ -7,7 +7,7 @@ import (
 // when Login We will use this table
 type Login struct {
 	gorm.Model
-	User     string
+	User     string `gorm:"uniqueIndex"`
 	Password string
 
 	//link foreign Key to Employee table
@@ -16,7 +16,7 @@ type Login struct {
 
 type Role struct {
 	gorm.Model
-	Name string
+	Name string `gorm:"uniqueIndex"`
 
 	//link foreign Key to Employee table
 	Employees []Employee `gorm:"foreignKey:RoleID"`
