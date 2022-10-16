@@ -88,7 +88,7 @@ func main() {
 		}
 	}
 
-	//pharmacist (roleName pharmacist)
+	//payment (roleName payment)
 	paymentApi := r.Group("/payment")
 	{
 		protected := paymentApi.Use(middlewares.AuthorizedPharmacist())
@@ -110,6 +110,9 @@ func main() {
 
 	//For signin (Auth Route)
 	r.POST("/signin", controller.Signin)
+
+	//for check token
+	r.GET("/valid", controller.Validation)
 
 	r.Run()
 }

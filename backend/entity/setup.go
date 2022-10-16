@@ -34,13 +34,13 @@ func SetupDatabase() {
 	role := Role{
 		Name: "admin",
 	}
+	db.Model(&Role{}).Create(&role)
 
 	login := Login{
 		User:     "Admin",
 		Password: string(password),
 	}
 
-	db.Model(&Role{}).Create(&role)
 	Loginerr := db.Model(&Login{}).Create(&login)
 	if Loginerr.Error == nil {
 		db.Model(&Employee{}).Create(&Employee{
@@ -50,5 +50,20 @@ func SetupDatabase() {
 			Role:    role,
 		})
 	}
+
+	role = Role{
+		Name: "intendant",
+	}
+	db.Model(&Role{}).Create(&role)
+
+	role = Role{
+		Name: "pharmacist",
+	}
+	db.Model(&Role{}).Create(&role)
+
+	role = Role{
+		Name: "payment",
+	}
+	db.Model(&Role{}).Create(&role)
 
 }
