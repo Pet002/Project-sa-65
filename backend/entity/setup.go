@@ -1,6 +1,8 @@
 package entity
 
 import (
+	"time"
+
 	"github.com/Pet002/Project-sa-65/services"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -23,6 +25,9 @@ func SetupDatabase() {
 		&Login{},
 		&Role{},
 		&Employee{},
+		&PayMedicine{},
+		&MedicineLabel{},
+		&Perscription{},
 	)
 
 	db = database
@@ -57,13 +62,47 @@ func SetupDatabase() {
 	db.Model(&Role{}).Create(&role)
 
 	role = Role{
-		Name: "pharmacist",
+		Name: "payment",
 	}
 	db.Model(&Role{}).Create(&role)
 
 	role = Role{
-		Name: "payment",
+		Name: "pharmacist",
 	}
 	db.Model(&Role{}).Create(&role)
+
+	login = Login{
+		User:     "pharmacist",
+		Password: string(password),
+	}
+
+	Loginerr = db.Model(&Login{}).Create(&login)
+	emp := Employee{
+		Name:    "Admin",
+		Surname: "Admin",
+		Login:   login,
+		Role:    role,
+	}
+
+	if Loginerr.Error == nil {
+		db.Model(&Employee{}).Create(&emp)
+	}
+
+	pers := Perscription{
+		CaseTime: time.Now(),
+		Symptom:  "Test",
+		Medicine: "Test",
+		Patient:  "test",
+		Employee: emp,
+	}
+	db.Model(&Perscription{}).Create(&pers)
+
+	ml := MedicineLabel{
+		RecordingDate: time.Now(),
+		MedicineUse:   "Test1",
+		Warning:       "Test2",
+		Employee:      emp,
+	}
+	db.Model(&MedicineLabel{}).Create(&ml)
 
 }

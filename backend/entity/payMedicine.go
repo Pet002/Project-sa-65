@@ -12,6 +12,8 @@ type MedicineLabel struct {
 
 	MedicineUse string
 	Warning     string
+	EmployeeID  *uint
+	Employee    Employee
 
 	PayMedicines []PayMedicine `gorm:"foreignKey:MedicineLabelID"`
 }
@@ -24,6 +26,9 @@ type Perscription struct {
 	Medicine string
 	Patient  string
 
+	EmployeeID *uint
+	Employee   Employee
+
 	PayMedicine []PayMedicine `gorm:"foreignKey:PerscriptionID"`
 }
 
@@ -32,7 +37,7 @@ type PayMedicine struct {
 
 	Amount  uint
 	Price   float64
-	PayDate time.Time
+	PayDate time.Time `valid:"past"`
 
 	MedicineLabelID *uint
 	MedicineLabel   MedicineLabel
