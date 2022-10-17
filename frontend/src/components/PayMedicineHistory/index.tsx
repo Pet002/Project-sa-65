@@ -91,13 +91,6 @@ export default function PayMedicineHistory() {
         getMedicineLabel()
     }, [])
 
-
-    const test = () => {
-        var date = new Date()
-        // console.log(payMedicine)
-        console.log(date.getHours())
-    }
-
     //use in all interface data
     function filterData(emp: any, item: number) {
         return emp.ID === item
