@@ -3,10 +3,10 @@ package controller
 import (
 	"net/http"
 
-	"github.com/Pet002/Project-sa-65/entity"
-	"github.com/Pet002/Project-sa-65/services"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
+	"github.com/tonphaii/Project-sa-65/entity"
+	"github.com/tonphaii/Project-sa-65/services"
 )
 
 //------------------- Part Role ----------------------------------
@@ -90,7 +90,7 @@ func UpdateRole(c *gin.Context) {
 func DeleteRole(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM roles WHETE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "roles not found"})
 		return
 	}
 
@@ -100,7 +100,7 @@ func DeleteRole(c *gin.Context) {
 //------------------- Part Login ----------------------------------
 
 // List all logins
-func ListLogins(c *gin.Context) {
+func ListLogin(c *gin.Context) {
 	var logins []entity.Login
 	if err := entity.DB().Raw("SELECT * FROM logins").Scan(&logins).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -128,9 +128,46 @@ func GetLogin(c *gin.Context) {
 	})
 }
 
+// PATCH /logins
+func UpdateLogin(c *gin.Context) {
+	var login entity.Login
+	if err := c.ShouldBindJSON(&login); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", login.ID).First(&login); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		return
+	}
+
+	if err := entity.DB().Save(&login).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "Update Success",
+		"data":   login,
+	})
+}
+
+// DELETE /logins/:id
+func DeleteLogin(c *gin.Context) {
+	id := c.Param("id")
+	if tx := entity.DB().Exec("DELETE FROM logins WHETE id = ?", id); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": id})
+}
+
 //-------------------------------------- Part Employee -----------------------------
 
-// ไว้สำหรับรับค่าตอน Create Employee
+// ไว้สำหรับรับค่าตอน Create Employee ตอน POST
 type signup struct {
 	//Employee
 	Name    string
@@ -140,6 +177,33 @@ type signup struct {
 	Password string
 	//Role
 	RoleName string
+}
+
+// List All Employee
+// GET /employees
+func ListEmployee(c *gin.Context) {
+	var employees []entity.Employee
+	if err := entity.DB().Raw("SELECT * FROM employees").Scan(&employees).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": employees,
+	})
+}
+
+// GET /employees/:id
+func GetEmployee(c *gin.Context) {
+	var employee entity.Employee
+	id := c.Param("id")
+	if err := entity.DB().Raw("SELECT * FROM employees WHERE id = ?", id).Scan(&employee).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": employee})
 }
 
 // POST /employee
@@ -213,4 +277,41 @@ func CreateEmployee(c *gin.Context) {
 		"status": "create login Success",
 		"data":   employee,
 	})
+}
+
+// PATCH /employees
+func UpdateEmployee(c *gin.Context) {
+	var employee entity.Employee
+	if err := c.ShouldBindJSON(&employee); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", employee.ID).First(&employee); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		return
+	}
+
+	if err := entity.DB().Save(&employee).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "Update Success",
+		"data":   employee,
+	})
+}
+
+// DELETE /emoloyees/:id
+func DeleteEmployee(c *gin.Context) {
+	id := c.Param("id")
+	if tx := entity.DB().Exec("DELETE FROM employees WHETE id = ?", id); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "employee not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": id})
 }
