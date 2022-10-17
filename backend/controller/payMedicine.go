@@ -172,6 +172,7 @@ func CreatePayMedicine(c *gin.Context) {
 	//main
 	var payMedicine entity.PayMedicine
 	//relation
+	var login entity.Login
 	var employee entity.Employee
 	var medicinelabel entity.MedicineLabel
 	var perscription entity.Perscription
@@ -184,8 +185,13 @@ func CreatePayMedicine(c *gin.Context) {
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", payMedicine.EmployeeID).First(&employee); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "employee not found"})
+	if tx := entity.DB().Where("id = ?", payMedicine.EmployeeID).First(&login); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "login not found"})
+		return
+	}
+
+	if tx := entity.DB().Where("login_id = ?", login.ID).First(&employee); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "login not found"})
 		return
 	}
 

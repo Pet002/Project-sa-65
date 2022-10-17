@@ -86,23 +86,22 @@ func SetupDatabase() {
 
 	if Loginerr.Error == nil {
 		db.Model(&Employee{}).Create(&emp)
-	}
+		pers := Perscription{
+			CaseTime: time.Now(),
+			Symptom:  "Test",
+			Medicine: "Test",
+			Patient:  "test",
+			Employee: emp,
+		}
+		db.Model(&Perscription{}).Create(&pers)
 
-	pers := Perscription{
-		CaseTime: time.Now(),
-		Symptom:  "Test",
-		Medicine: "Test",
-		Patient:  "test",
-		Employee: emp,
+		ml := MedicineLabel{
+			RecordingDate: time.Now(),
+			MedicineUse:   "Test1",
+			Warning:       "Test2",
+			Employee:      emp,
+		}
+		db.Model(&MedicineLabel{}).Create(&ml)
 	}
-	db.Model(&Perscription{}).Create(&pers)
-
-	ml := MedicineLabel{
-		RecordingDate: time.Now(),
-		MedicineUse:   "Test1",
-		Warning:       "Test2",
-		Employee:      emp,
-	}
-	db.Model(&MedicineLabel{}).Create(&ml)
 
 }
