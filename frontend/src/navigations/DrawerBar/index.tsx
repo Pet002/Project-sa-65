@@ -37,8 +37,10 @@ export default function DrawerBar({ role, drawerWidth, handleDrawerClose, open ,
         }
         else if (role === "pharmacist") {
             menu = [
-                { "text": "Dashboard", "icon": <DashboardIcon />, "link": "/" },
-                { "text": "Medicine Pay", "icon": <MedicationIcon />, "link": "/medicinepay" },
+                { "text": "หน้าแรก", "icon": <DashboardIcon />, "link": "/" },
+                { "text": "จ่ายยา", "icon": <MedicationIcon />, "link": "/medicinepay" },
+                
+
             ]
         }
         else if (role === "payment") {

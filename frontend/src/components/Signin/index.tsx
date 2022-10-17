@@ -5,7 +5,7 @@ import logo from './../../image/logo.png'
 
 import './signin.css'
 
-import { SigninInterface } from './../../modules/ISingin'
+import { SigninInterface } from '../../models/ISingin'
 
 export default function Signin() {
 
