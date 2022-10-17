@@ -63,6 +63,27 @@ func main() {
 			protected.POST("/employee", controller.CreateEmployee)
 			protected.PATCH("/employee", controller.UpdateEmployee)
 			protected.DELETE("/employee/:id", controller.DeleteEmployee)
+
+			//MedicineLabel
+			protected.GET("/medicine_labels", controller.ListMedicineLabel)
+			protected.GET("/medicine_label/:id", controller.GetMedicineLabel)
+			protected.POST("/medicine_label", controller.CreateMedicineLabel)
+			protected.PATCH("/medicine_label", controller.UpdateMedicineLabel)
+			protected.DELETE("/medicine_label/:id", controller.DeleteMedicineLabel)
+
+			//MedicineUse
+			protected.GET("/medicine_uses", controller.ListMedicineUse)
+			protected.GET("/medicine_use/:id", controller.GetMedicineUse)
+			protected.POST("/medicine_use", controller.CreateMedicineUse)
+			protected.PATCH("/medicine_use", controller.UpdateMedicineUse)
+			protected.DELETE("/medicine_use/:id", controller.DeleteMedicineUse)
+
+			//Warning
+			protected.GET("/warnings", controller.ListWarning)
+			protected.GET("/warning/:id", controller.GetWarning)
+			protected.POST("/warning", controller.CreateWarning)
+			protected.PATCH("/warning", controller.UpdateWarning)
+			protected.DELETE("/warning/:id", controller.DeleteWarning)
 		}
 	}
 
@@ -82,18 +103,18 @@ func main() {
 	{
 		protected := pharmacistApi.Use(middlewares.AuthorizedPharmacist())
 		{
-			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
+			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /phamacist/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
 
 		}
 	}
 
-	//pharmacist (roleName pharmacist)
+	//payment (roleName payment)
 	paymentApi := r.Group("/payment")
 	{
 		protected := paymentApi.Use(middlewares.AuthorizedPharmacist())
 		{
-			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
+			//พี่ก็อต เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /payment/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
 
 		}
@@ -110,6 +131,9 @@ func main() {
 
 	//For signin (Auth Route)
 	r.POST("/signin", controller.Signin)
+
+	//for check token
+	r.GET("/valid", controller.Validation)
 
 	r.Run()
 }

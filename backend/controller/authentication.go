@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/Thanaporn4226/Project-sa-65/entity"
 	"github.com/Thanaporn4226/Project-sa-65/services"
@@ -75,4 +76,43 @@ func Signin(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
+}
+
+// GET /valid
+// validation token
+func Validation(c *gin.Context) {
+	clientToken := c.Request.Header.Get("Authorization")
+	if clientToken == "" {
+		c.JSON(http.StatusForbidden, gin.H{
+			"error": "No Authorization header provided",
+		})
+		return
+	}
+
+	extractedToken := strings.Split(clientToken, "Bearer ")
+
+	if len(extractedToken) == 2 {
+		clientToken = strings.TrimSpace(extractedToken[1])
+	} else {
+		c.JSON(http.StatusBadGateway, gin.H{"error": "Incorrect Format of Authorization Token", "len": extractedToken})
+		return
+	}
+
+	jwtWrapper := services.JwtWrapper{
+		SecretKey: "Secret",
+		Issuer:    "AuthService",
+	}
+
+	claims, err := jwtWrapper.ValidateToken(clientToken)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status": "Valid Ok",
+		"data":   claims,
+	})
 }

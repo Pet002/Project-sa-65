@@ -1,66 +1,11 @@
-// package entity
-
-// import (
-// 	"github.com/Thanaporn4226/Project-sa-65/services"
-// 	"gorm.io/driver/sqlite"
-// 	"gorm.io/gorm"
-// )
-
-// var db *gorm.DB
-
-// func DB() *gorm.DB {
-// 	return db
-// }
-
-// func SetupDatabase() {
-// 	database, err := gorm.Open(sqlite.Open("MedicineRoom.db"), &gorm.Config{})
-
-// 	if err != nil {
-// 		panic("failed to connect database")
-// 	}
-
-// 	database.AutoMigrate(
-// 		&Login{},
-// 		&Role{},
-// 		&Employee{},
-// 	)
-
-// 	db = database
-
-// 	//เราจะทำการสร้าง Admin account ไว้สำหรับการสร้าง Employee และ role ต่างๆ
-
-// 	password, _ := services.Hash("123456")
-
-// 	role := Role{
-// 		Name: "admin",
-// 	}
-
-// 	login := Login{
-// 		User:     "Admin",
-// 		Password: string(password),
-// 	}
-
-// 	db.Model(&Role{}).Create(&role)
-// 	Loginerr := db.Model(&Login{}).Create(&login)
-// 	if Loginerr.Error == nil {
-// 		db.Model(&Employee{}).Create(&Employee{
-// 			Name:    "Admin",
-// 			Surname: "Admin",
-// 			Login:   login,
-// 			Role:    role,
-// 		})
-// 	}
-
-// }
-
 package entity
 
 import (
 	"time"
 
-	"gorm.io/gorm"
-
+	"github.com/Thanaporn4226/Project-sa-65/services"
 	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 var db *gorm.DB
@@ -73,7 +18,7 @@ func DB() *gorm.DB {
 
 func SetupDatabase() {
 
-	database, err := gorm.Open(sqlite.Open("sa-65.db"), &gorm.Config{})
+	database, err := gorm.Open(sqlite.Open("MedicineRoom.db"), &gorm.Config{})
 
 	if err != nil {
 
@@ -87,9 +32,51 @@ func SetupDatabase() {
 		&MedicineUse{},
 		&Warning{},
 		&MedicineLabel{},
+		&Login{},
+		&Role{},
+		&Employee{},
 	)
 
 	db = database
+
+	//เราจะทำการสร้าง Admin account ไว้สำหรับการสร้าง Employee และ role ต่างๆ
+
+	password, _ := services.Hash("123456")
+
+	role := Role{
+		Name: "admin",
+	}
+	db.Model(&Role{}).Create(&role)
+
+	login := Login{
+		User:     "Admin",
+		Password: string(password),
+	}
+
+	Loginerr := db.Model(&Login{}).Create(&login)
+	if Loginerr.Error == nil {
+		db.Model(&Employee{}).Create(&Employee{
+			Name:    "Admin",
+			Surname: "Admin",
+			Login:   login,
+			Role:    role,
+		})
+	}
+
+	role = Role{
+		Name: "intendant",
+	}
+	db.Model(&Role{}).Create(&role)
+
+	role = Role{
+		Name: "pharmacist",
+	}
+	db.Model(&Role{}).Create(&role)
+
+	role = Role{
+		Name: "payment",
+	}
+	db.Model(&Role{}).Create(&role)
 
 	//Employee Data
 	emp1 := Employee{
@@ -166,4 +153,5 @@ func SetupDatabase() {
 		MedicineUse:   mu3,
 		Employee:      emp2,
 	})
+
 }

@@ -1,138 +1,162 @@
-import React from "react";
-import AppBar from '@mui/material/AppBar';
+import React, { useEffect } from 'react';
+import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Signin from './components/Signin';
+
+
+//theme
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import TextField from "@mui/material/TextField";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-//import dayjs, { Dayjs } from 'dayjs';
-import Stack from '@mui/material/Stack';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import CssBaseline from '@mui/material/CssBaseline';
+import Navbar from './navigations/NavBar';
+import DrawerBar from './navigations/DrawerBar';
+import { Roletest } from './components/Roletest';
+
+
+const drawerWidth = 240;
+
 
 function App() {
-  // export default function MaterialUIPickers() {
-  //   const [value, setValue] = React.useState<Dayjs | null>(
-  //     dayjs('2014-08-18T21:11:54'),
-  //   );
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#338064",
+      },
+      secondary: {
+        main: "#8FCCB6"
+      },
+      text: {
+        primary: "#1B2420",
+        secondary: "#1B2420"
+      }
+    },
 
-  //   const handleChange = (newValue: Dayjs | null) => {
-  //     setValue(newValue);
-  //   };
+  })
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
 
-    return (
+  };
 
-      <div>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                ฉลากยา
-              </Typography>
-              <Button color="inherit">Login</Button>
-            </Toolbar>
-          </AppBar>
-        </Box>
+  const handleDrawerClose = () => {
+    setOpen(false);
 
-        <Container maxWidth="md">
-          <Paper>
-            <Box
-              display={"flex"}
-              sx={{
-                marginTop: 2,
-                paddingX: 1,
-                paddingY: 1,
-              }}
-            >
-              <h2>ฉลากยา</h2>
-            </Box>
-            <hr />
-            <Grid>
+  };
 
-              <Grid container spacing={10}>
-                <Grid item xs={2}>
-                  <p>วิธีการใช้ยา</p>
-                </Grid>
-                <Grid item xs={7}>
-                  <TextField fullWidth id="วิธีการใช้ยา" variant="outlined" />
-                </Grid>
-              </Grid>
-
-              <Grid container spacing={10}>
-                <Grid item xs={2}>
-                  <p>คำเตือน</p>
-                </Grid>
-                <Grid item xs={7}>
-                  <TextField fullWidth id="คำเตือน" variant="outlined" />
-                </Grid>
-              </Grid>
-
-              <Grid container spacing={10}>
-                <Grid item xs={2}>
-                  <p>เภสัชกร</p>
-                </Grid>
-                <Grid item xs={7}>
-                  <TextField fullWidth id="เภสัชกร" variant="outlined" />
-                </Grid>
-              </Grid>
-
-              <Grid container spacing={10}>
-                <Grid item xs={2}>
-                  <p>วันที่และเวลา</p>
-                </Grid>
-                <Grid item xs={7}>
-                  <TextField fullWidth id="วันที่และเวลา" variant="outlined" />
-                </Grid>
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Stack spacing={3}>
-                    <DateTimePicker
-                      label="วันที่และเวลา"
-                      value={value}
-                      onChange={handleChange}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </Stack>
-                </LocalizationProvider> */}
-              </Grid>
-
-              <Grid container spacing={10}>
-                <Grid item xs={12}>
-                  <Button variant="contained" color="info">
-                    ยกเลิก
-                  </Button>
-                  <Button variant="contained" color="success" sx={{ float: "right" }}>
-                    บันทึกฉลากยา
-                  </Button>
-                </Grid>
-              </Grid>
-
-            </Grid>
-          </Paper>
-        </Container>
-      </div>
+  const [token, setToken] = React.useState<String>("");
+  const [statustoken, setStatustoken] = React.useState<boolean>(false);
 
 
-    );
-  //}
+
+  const [role, setRole] = React.useState<String>("")
+
+  const [open, setOpen] = React.useState<boolean>(false)
+
+  useEffect(() => {
+    const validToken = () => {
+      fetch("http://localhost:8080/valid", {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`
+        }
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+          if (!data.error) {
+            setStatustoken(true)
+          } else {
+            setStatustoken(false)
+            localStorage.clear();
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          setStatustoken(false)
+        })
+    }
+
+    const token: any = localStorage.getItem("token")
+    const role: any = localStorage.getItem("role")
+    if (token) {
+      setToken(token)
+      setRole(role)
+      validToken()
+    }
+
+  }, [])
+
+
+  if (!token || !statustoken) {
+    console.log(statustoken)
+    return <Signin />
+  }
+
+
+
+  const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{ open?: boolean; }>(({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }));
+
+
+
+  const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  }));
+
+
+
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Router>
+        <div>
+          <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <Navbar open={open} onClick={handleDrawerOpen} />
+            <DrawerBar open={open} drawerWidth={drawerWidth} handleDrawerClose={handleDrawerClose} role={role} theme={theme} />
+            <Main open={open}>
+              <DrawerHeader />
+              {/* function Route */}
+              <Routes>
+
+                {/* Add element here!!!! and role  */}
+                { role === "admin" && <Route path='/' element={<Roletest />} /> }
+                { role === "admin" && <Route path='/'/> }
+                { role === "admin" && <Route path='/'/> }
+                { role === "admin" && <Route path='/'/> }
+                
+              </Routes>
+            </Main>
+          </Box>
+        </div>
+      </Router>
+    </ThemeProvider>
+  );
 }
+
+
+
 
 export default App;
