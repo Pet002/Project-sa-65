@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -74,7 +75,7 @@ func Signin(c *gin.Context) {
 		UserID:   login.ID,
 		RoleName: role.Name,
 	}
-
+	fmt.Print(tokenResponse)
 	c.JSON(http.StatusOK, gin.H{"data": tokenResponse})
 }
 

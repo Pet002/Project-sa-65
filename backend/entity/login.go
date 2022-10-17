@@ -37,4 +37,6 @@ type Employee struct {
 	RoleID *uint
 	//To easier for join table
 	Role Role
+
+	Medicine []Medicine `gorm:"foreignKey:EmployeeID"`
 }
