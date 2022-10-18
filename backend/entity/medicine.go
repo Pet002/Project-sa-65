@@ -8,12 +8,17 @@ import (
 
 type Medicine struct {
 	gorm.Model
-	Name    string
-	Type    string
-	MFD     time.Time
-	EXP     time.Time
-	Amount  uint
-	Storage string
+	Name   string
+	MFD    time.Time
+	EXP    time.Time
+	Amount int
 
-	Prescriptions []Prescription `gorm:"foreignKey:MedicineID"`
+	EmployeeID *uint
+	Employee   Employee
+
+	TypeID *uint
+	Type   Type
+
+	StorageID *uint
+	Storage   Storage
 }

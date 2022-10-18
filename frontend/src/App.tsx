@@ -13,6 +13,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from './navigations/NavBar';
 import DrawerBar from './navigations/DrawerBar';
 import { Roletest } from './components/Roletest';
+import Employees from './components/Employees';
+import { Home } from './components/Home';
+import { EmployeeCreate } from './components/EmployeeCreate';
+import { Medicine } from './components/Medicine';
+import { MedicineCrate } from './components/MedicineCreate';
 
 
 const drawerWidth = 240;
@@ -146,6 +151,15 @@ function App() {
                 { role === "admin" && <Route path='/'/> }
                 { role === "admin" && <Route path='/'/> }
                 { role === "admin" && <Route path='/'/> }
+
+                //medicine
+                { role === "intendant" && <Route path='/' element={<Home />} /> }
+                { role === "intendant" && <Route path='/employees' element={<Employees />} /> }
+                { role === "intendant" && <Route path='/employee/create' element={<EmployeeCreate />} /> }
+                { role === "intendant" && <Route path='/medicines' element={<Medicine />} /> }
+                { role === "intendant" && <Route path='/medicine/create' element={<MedicineCrate />} /> }
+
+                
                 
               </Routes>
             </Main>
