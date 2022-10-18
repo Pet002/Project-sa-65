@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// POST /prescriptions
 func CreatePrescription(c *gin.Context) {
 	var prescription entity.Prescription
 	var patient entity.Patient
@@ -51,6 +52,7 @@ func CreatePrescription(c *gin.Context) {
 
 }
 
+// GET /prescriptions/:id
 func GetPrescription(c *gin.Context) {
 	var prescriptions entity.Prescription
 	id := c.Param("id")
@@ -63,6 +65,8 @@ func GetPrescription(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": prescriptions})
 }
+
+// GET /prescriptions
 func ListPrescription(c *gin.Context) {
 	var prescriptions []entity.Prescription
 	if err := entity.DB().Preload("Medicine").Preload("Patient").Preload("Employee").Raw("SELECT * FROM prescriptions").Find(&prescriptions).Error; err != nil {
@@ -73,6 +77,7 @@ func ListPrescription(c *gin.Context) {
 
 }
 
+// DELETE /prescriptions/:id
 func DeletePrescription(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM prescriptions WHERE id = ?", id); tx.RowsAffected == 0 {
@@ -84,8 +89,7 @@ func DeletePrescription(c *gin.Context) {
 
 }
 
-// PATCH /users
-
+// PATCH /prescriptions
 func UpdatePrescription(c *gin.Context) {
 	var prescriptions entity.Prescription
 	if err := c.ShouldBindJSON(&prescriptions); err != nil {
@@ -102,4 +106,75 @@ func UpdatePrescription(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": prescriptions})
+}
+
+// POST /patients
+func CreatePatient(c *gin.Context) {
+	var patient entity.Patient
+	if err := c.ShouldBindJSON(&patient); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := entity.DB().Create(&patient).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+
+	}
+	c.JSON(http.StatusOK, gin.H{"data": patient})
+}
+
+// GET /patients/:id
+func GetPatient(c *gin.Context) {
+	var patient entity.Patient
+	id := c.Param("id")
+	if err := entity.DB().Raw("SELECT * FROM patients WHERE id = ?", id).Scan(&patient).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": patient})
+}
+
+// GET /patients
+func ListPatient(c *gin.Context) {
+	var patient []entity.Patient
+	if err := entity.DB().Raw("SELECT * FROM patients").Scan(&patient).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": patient})
+
+}
+
+// DELETE /patients/:id
+func DeletePatient(c *gin.Context) {
+	id := c.Param("id")
+	if tx := entity.DB().Exec("DELETE FROM patients WHERE id = ?", id); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "prescription not found"})
+		return
+
+	}
+	c.JSON(http.StatusOK, gin.H{"data": id})
+
+}
+
+// PATCH /patients
+func UpdatePatient(c *gin.Context) {
+	var patient entity.Patient
+	if err := c.ShouldBindJSON(&patient); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if tx := entity.DB().Where("id = ?", patient.ID).First(&patient); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "prescription not found"})
+
+	}
+	if err := entity.DB().Save(&patient).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": patient})
 }
