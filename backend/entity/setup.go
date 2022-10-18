@@ -41,6 +41,9 @@ func SetupDatabase() {
 		&Type{},
 		&Storage{},
 		&Medicine{},
+		&PayMedicine{},
+		&MedicineLabel{},
+		&Perscription{},
 	)
 
 	db = database
@@ -104,7 +107,7 @@ func SetupDatabase() {
 	}
 
 	role = Role{
-		Name: "pharmacist",
+		Name: "payment",
 	}
 	db.Model(&Role{}).Create(&role)
 
@@ -139,7 +142,7 @@ func SetupDatabase() {
 	}
 
 	role = Role{
-		Name: "payment",
+		Name: "pharmacist",
 	}
 	db.Model(&Role{}).Create(&role)
 

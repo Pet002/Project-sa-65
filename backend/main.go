@@ -127,6 +127,23 @@ func main() {
 		{
 			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /phamacist/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
+			protected.GET("/employees", controller.ListEmployee)
+
+			//perscriptions
+			protected.GET("/perscriptions", controller.ListPerscription)
+			protected.GET("/perscriptions/:id", controller.GetPerscription)
+			protected.POST("/perscriptions", controller.CreatePerscription)
+			//medicine Label
+			protected.GET("/medicinelabels", controller.ListMedicineLabel)
+			protected.GET("/medicinelabels/:id", controller.GetMedicineLabel)
+			protected.POST("/medicinelabels", controller.CreateMedicineLabel)
+
+			//pay Medicines
+			protected.GET("/paymedicines", controller.ListPayMedicine)
+			protected.GET("/paymedicines/:id", controller.GetPayMedicine)
+			protected.POST("/paymedicines", controller.CreatePayMedicine)
+			protected.PATCH("/paymedicines", controller.UpdatePayMedicine)
+			protected.DELETE("/paymedicines/:id", controller.DeletePayMedicine)
 
 		}
 	}

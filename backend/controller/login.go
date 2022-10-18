@@ -89,7 +89,7 @@ func UpdateRole(c *gin.Context) {
 // DELETE /roles/:id
 func DeleteRole(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM roles WHETE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM roles WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "roles not found"})
 		return
 	}

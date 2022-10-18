@@ -13,6 +13,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from './navigations/NavBar';
 import DrawerBar from './navigations/DrawerBar';
 import { Roletest } from './components/Roletest';
+import PayMedicine from './components/PayMedicine';
+import PayMedicineHistory from './components/PayMedicineHistory';
 import Employees from './components/Employees';
 import { Home } from './components/Home';
 import { EmployeeCreate } from './components/EmployeeCreate';
@@ -141,6 +143,7 @@ function App() {
             <CssBaseline />
             <Navbar open={open} onClick={handleDrawerOpen} />
             <DrawerBar open={open} drawerWidth={drawerWidth} handleDrawerClose={handleDrawerClose} role={role} theme={theme} />
+            
             <Main open={open}>
               <DrawerHeader />
               {/* function Route */}
@@ -148,9 +151,14 @@ function App() {
 
                 {/* Add element here!!!! and role  */}
                 { role === "admin" && <Route path='/' element={<Roletest />} /> }
+                { role === "admin" && <Route path='/dashboard' element={<Roletest />} /> }
                 { role === "admin" && <Route path='/'/> }
                 { role === "admin" && <Route path='/'/> }
-                { role === "admin" && <Route path='/'/> }
+
+                { role === "pharmacist" && <Route path='/' /> }
+                { role === "pharmacist" && <Route path='/medicinepay' element={<PayMedicineHistory />} /> }
+                { role === "pharmacist" && <Route path='/medicinepay/create' element={<PayMedicine />} /> }
+
 
                 //medicine
                 { role === "intendant" && <Route path='/' element={<Home />} /> }
