@@ -1,24 +1,24 @@
 package entity
 
-// import (
-// 	"time"
+import (
+	"time"
 
-// 	"gorm.io/gorm"
-// )
+	"gorm.io/gorm"
+)
 
-// // Entity หลัก
-// type Prescription struct {
-// 	gorm.Model
-// 	PrescriptionID string
-// 	Symptom        string //อาการป่วย
-// 	Case_Time      time.Time
+// Entity หลัก
+type Prescription struct {
+	gorm.Model
+	PrescriptionID string
+	Symptom        string //อาการป่วย
+	Case_Time      time.Time
 
-// 	EmployeeID *uint
-// 	Employee   Employee
+	EmployeeID *uint
+	Employee   Employee
 
-// 	MedicineID *uint
-// 	Medicine   Medicine
+	MedicineID *uint
+	Medicine   Medicine
 
-// 	PatientID *uint
-// 	Patient   Patient
-// }
+	PatientID *uint
+	Patient   Patient
+}
