@@ -7,7 +7,7 @@ import (
 )
 
 // types
-type Type struct {
+type MedicineType struct {
 	gorm.Model
 	Tmedicine  string
 	Utilzation string
@@ -33,7 +33,7 @@ type Medicine struct {
 	Employee   Employee
 
 	TypeID *uint
-	Type   Type
+	Type   MedicineType
 
 	StorageID *uint
 	Storage   Storage

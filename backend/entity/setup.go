@@ -1,6 +1,8 @@
 package entity
 
 import (
+	"time"
+
 	"github.com/Pet002/Project-sa-65/services"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -39,13 +41,13 @@ func SetupDatabase() {
 		&Prescription{},
 		&Patient{},
 		//Medicine
-		&Type{},
+		&MedicineType{},
 		&Storage{},
 		&Medicine{},
 		//PayMedicine
 		&PayMedicine{},
 		//Receipt
-		&Types{},
+		&PaymentTypes{},
 		&Receipt{},
 	)
 
@@ -55,548 +57,469 @@ func SetupDatabase() {
 
 	password, _ := services.Hash("123456")
 
-	role := Role{
+	admin := Role{
 		Name: "admin",
 	}
-	db.Model(&Role{}).Create(&role)
-	login := Login{
-		User:     "Admin",
+	db.Model(&Role{}).Create(&admin)
+
+	intendant := Role{
+		Name: "intendant",
+	}
+
+	db.Model(&Role{}).Create(&intendant)
+
+	payment := Role{
+		Name: "payment",
+	}
+	db.Model(&Role{}).Create(&payment)
+
+	pharmacist := Role{
+		Name: "pharmacist",
+	}
+	db.Model(&Role{}).Create(&pharmacist)
+
+	//Admin 1
+	admin1 := Login{
+		User:     "Admin1",
 		Password: string(password),
 	}
-	Loginerr := db.Model(&Login{}).Create(&login)
-	if Loginerr.Error == nil {
-		db.Model(&Employee{}).Create(&Employee{
-			Name:    "Admin",
-			Surname: "Admin",
-			Login:   login,
-			Role:    role,
-		})
+	admin1err := db.Model(&Login{}).Create(&admin1)
+	admin1emp := Employee{
+		Name:    "Admin1",
+		Surname: "Example1",
+		Login:   admin1,
+		Role:    admin,
+	}
+	if admin1err.Error == nil {
+		db.Model(&Employee{}).Create(&admin1emp)
 	}
 
-	// role = Role{
-	// 	Name: "intendant",
-	// }
-	// db.Model(&Role{}).Create(&role)
-	// login_2 := Login{
-	// 	User:     "B6217174",
-	// 	Password: string(password),
-	// }
-	// Loginerr2 := db.Model(&Login{}).Create(&login_2)
+	//Admin 2
+	admin2 := Login{
+		User:     "Admin2",
+		Password: string(password),
+	}
+	admin2err := db.Model(&Login{}).Create(&admin2)
+	admin2emp := Employee{
+		Name:    "Admin1",
+		Surname: "Example1",
+		Login:   admin2,
+		Role:    admin,
+	}
+	if admin2err.Error == nil {
+		db.Model(&Employee{}).Create(&admin2emp)
+	}
 
-	// emp := Employee{
-	// 	Name:    "Palida",
-	// 	Surname: "Suwannarat",
-	// 	Login:   login_2,
-	// 	Role:    role,
-	// }
-	// if Loginerr2.Error == nil {
-	// 	db.Model(&Employee{}).Create(&emp)
-	// }
+	//Intendant 1
+	intendant1 := Login{
+		User:     "Intendant1",
+		Password: string(password),
+	}
+	inten1err := db.Model(&Login{}).Create(&intendant1)
+	inten1emp := Employee{
+		Name:    "Intendant1",
+		Surname: "Example1",
+		Login:   intendant1,
+		Role:    intendant,
+	}
+	if inten1err.Error == nil {
+		db.Model(&Employee{}).Create(&inten1emp)
+	}
 
-	// login_3 := Login{
-	// 	User:     "B6217162",
-	// 	Password: string(password),
-	// }
-	// Loginerr3 := db.Model(&Login{}).Create(&login_3)
+	//Intendant 2
+	intendant2 := Login{
+		User:     "Intendant2",
+		Password: string(password),
+	}
+	inten2err := db.Model(&Login{}).Create(&intendant2)
+	inten2emp := Employee{
+		Name:    "Intendant2",
+		Surname: "Example1",
+		Login:   intendant2,
+		Role:    intendant,
+	}
+	if inten2err.Error == nil {
+		db.Model(&Employee{}).Create(&inten2emp)
+	}
 
-	// emp2 := Employee{
-	// 	Name:    "Pichanon",
-	// 	Surname: "Suwannarat",
-	// 	Login:   login_3,
-	// 	Role:    role,
-	// }
-	// if Loginerr3.Error == nil {
-	// 	db.Model(&Employee{}).Create(&emp2)
-	// }
+	//Payment 1
+	payment1 := Login{
+		User:     "Payment1",
+		Password: string(password),
+	}
+	pay1err := db.Model(&Login{}).Create(&payment1)
+	pay1emp := Employee{
+		Name:    "Payment1",
+		Surname: "Example1",
+		Login:   payment1,
+		Role:    payment,
+	}
+	if pay1err.Error == nil {
+		db.Model(&Employee{}).Create(&pay1emp)
+	}
 
-	// role = Role{
-	// 	Name: "payment",
-	// }
-	// db.Model(&Role{}).Create(&role)
+	//Payment 2
+	payment2 := Login{
+		User:     "Payment2",
+		Password: string(password),
+	}
+	pay2err := db.Model(&Login{}).Create(&payment2)
+	pay2emp := Employee{
+		Name:    "Payment2",
+		Surname: "Example2",
+		Login:   payment2,
+		Role:    payment,
+	}
+	if pay2err.Error == nil {
+		db.Model(&Employee{}).Create(&pay2emp)
+	}
 
-	// login_4 := Login{
-	// 	User:     "pharmacist",
-	// 	Password: string(password),
-	// }
-	// Loginerr4 := db.Model(&Login{}).Create(&login_4)
+	//pharmacist 1
+	pharmacist1 := Login{
+		User:     "Pharmacist1",
+		Password: string(password),
+	}
+	phar1err := db.Model(&Login{}).Create(&pharmacist1)
+	phar1emp := Employee{
+		Name:    "Pharmacist1",
+		Surname: "Example1",
+		Login:   pharmacist1,
+		Role:    pharmacist,
+	}
+	if phar1err.Error == nil {
+		db.Model(&Employee{}).Create(&phar1emp)
+	}
 
-	// emp4 := Employee{
-	// 	Name:    "Pichanon",
-	// 	Surname: "Suwannarat",
-	// 	Login:   login_4,
-	// 	Role:    role,
-	// }
-	// if Loginerr4.Error == nil {
-	// 	db.Model(&Employee{}).Create(&emp4)
-	// }
-	// login_6 := Login{
-	// 	User:     "U6215576",
-	// 	Password: string(password),
-	// }
-	// Loginer_6 := db.Model(&Login{}).Create(&login_6)
-	// if Loginer_6.Error == nil {
-	// 	e1 := Employee{
-	// 		Name:    "Butsakorn",
-	// 		Surname: "Kharom",
-	// 		Login:   login_6,
-	// 		Role:    role,
-	// 	}
-	// 	db.Model(&Employee{}).Create(&e1)
-	// }
-
-	// role = Role{
-	// 	Name: "pharmacist",
-	// }
-	// db.Model(&Role{}).Create(&role)
-
-	// login_5 := Login{
-	// 	User:     "pharmacist",
-	// 	Password: string(password),
-	// }
-	// Loginerr5 := db.Model(&Login{}).Create(&login_5)
-
-	// emp5 := Employee{
-	// 	Name:    "pharmacist",
-	// 	Surname: "Test",
-	// 	Login:   login_5,
-	// 	Role:    role,
-	// }
-	// if Loginerr5.Error == nil {
-	// 	db.Model(&Employee{}).Create(&emp5)
-	// }
+	//pharmacist 2
+	pharmacist2 := Login{
+		User:     "Pharmacist2",
+		Password: string(password),
+	}
+	phar2err := db.Model(&Login{}).Create(&pharmacist2)
+	phar2emp := Employee{
+		Name:    "Payment2",
+		Surname: "Example2",
+		Login:   pharmacist2,
+		Role:    pharmacist,
+	}
+	if phar2err.Error == nil {
+		db.Model(&Employee{}).Create(&phar2emp)
+	}
 
 	// //-------------------------------------- medicine ----------------------------------------------
 
-	// //----------Type-------------------
-	// tha := Type{
-	// 	Tmedicine:  "ยาใช้ภายนอก",
-	// 	Utilzation: "ทา",
-	// }
-	// db.Model(&Type{}).Create(&tha)
+	//----------Type-------------------
+	tha := MedicineType{
+		Tmedicine:  "ยาใช้ภายนอก",
+		Utilzation: "ทา",
+	}
+	db.Model(&MedicineType{}).Create(&tha)
 
-	// med := Type{
-	// 	Tmedicine:  "ยาใช้ภายใน",
-	// 	Utilzation: "เม็ด",
-	// }
-	// db.Model(&Type{}).Create(&med)
+	med := MedicineType{
+		Tmedicine:  "ยาใช้ภายใน",
+		Utilzation: "เม็ด",
+	}
+	db.Model(&MedicineType{}).Create(&med)
 
-	// cheed := Type{
-	// 	Tmedicine:  "ยาใช้ภายใน",
-	// 	Utilzation: "ฉีด",
-	// }
-	// db.Model(&Type{}).Create(&cheed)
+	cheed := MedicineType{
+		Tmedicine:  "ยาใช้ภายใน",
+		Utilzation: "ฉีด",
+	}
+	db.Model(&MedicineType{}).Create(&cheed)
 
-	// nam := Type{
-	// 	Tmedicine:  "ยาใช้ภายใน",
-	// 	Utilzation: "น้ำ",
-	// }
-	// db.Model(&Type{}).Create(&nam)
+	nam := MedicineType{
+		Tmedicine:  "ยาใช้ภายใน",
+		Utilzation: "น้ำ",
+	}
+	db.Model(&MedicineType{}).Create(&nam)
 
-	// //-------------Storage----------------
-	// b1 := Storage{
-	// 	Name: "B1",
-	// }
-	// db.Model(&Storage{}).Create(&b1)
+	//-------------Storage----------------
+	b1 := Storage{
+		Name: "B1",
+	}
+	db.Model(&Storage{}).Create(&b1)
 
-	// b2 := Storage{
-	// 	Name: "B2",
-	// }
-	// db.Model(&Storage{}).Create(&b2)
+	b2 := Storage{
+		Name: "B2",
+	}
+	db.Model(&Storage{}).Create(&b2)
 
 	// //-------------Medicine---------------
 
-	// db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "Paracetamol",
-	// 	Type:     med,
-	// 	MFD:      time.Date(2022, 8, 28, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 8, 28, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b1,
-	// 	Amount:   100,
-	// })
-	// /*db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "Menopain",
-	// 	Type:     med,
-	// 	MFD:      time.Date(2022, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b1,
-	// 	Amount:   100,
-	// })
-	// db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "b-derm",
-	// 	Type:     tha,
-	// 	MFD:      time.Date(2022, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b2,
-	// 	Amount:   100,
-	// })
-	// db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "Cetirizine",
-	// 	Type:     med,
-	// 	MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b2,
-	// 	Amount:   100,
-	// })
-	// db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "ฺBromhexine", //ยาละลายเสมหะ
-	// 	Type:     med,
-	// 	MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b2,
-	// 	Amount:   100,
-	// })
-	// db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "Cenor", //ยาต้านเชื้อแบคทีเรีย
-	// 	Type:     med,
-	// 	MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b1,
-	// 	Amount:   100,
-	// })
-	// db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "Tramadol", //ยาบรรเทาอาการปวดรุนแรง
-	// 	Type:     med,
-	// 	MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b1,
-	// 	Amount:   100,
-	// })
-	// db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "Salol et Menthol Mixture", //ยาธาตุน้ำขาว
-	// 	Type:     med,
-	// 	MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b2,
-	// 	Amount:   100,
-	// })
-	// db.Model(&Medicine{}).Create(&Medicine{
-	// 	Employee: emp,
-	// 	Name:     "Atorvastatin", //ยา]f++
-	// 	Type:     med,
-	// 	MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	Storage:  b2,
-	// 	Amount:   100,
-	// })*/
+	med1 := Medicine{
+		Employee: inten1emp,
+		Name:     "Paracetamol",
+		Type:     med,
+		MFD:      time.Date(2022, 8, 28, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 8, 28, 12, 0, 0, 0, time.UTC),
+		Storage:  b1,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med1)
+
+	//=====
+	med2 := Medicine{
+		Employee: inten1emp,
+		Name:     "Menopain",
+		Type:     med,
+		MFD:      time.Date(2022, 8, 30, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 8, 30, 12, 0, 0, 0, time.UTC),
+		Storage:  b1,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med2)
+
+	//====
+	med3 := Medicine{
+		Employee: inten2emp,
+		Name:     "b-derm",
+		Type:     tha,
+		MFD:      time.Date(2022, 8, 30, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 8, 30, 12, 0, 0, 0, time.UTC),
+		Storage:  b2,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med3)
+
+	//===
+	med4 := Medicine{
+		Employee: inten1emp,
+		Name:     "Cetirizine",
+		Type:     med,
+		MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
+		Storage:  b2,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med4)
+
+	//===
+	med5 := Medicine{
+		Employee: inten1emp,
+		Name:     "ฺBromhexine", //ยาละลายเสมหะ
+		Type:     med,
+		MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
+		Storage:  b2,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med5)
+
+	//===
+	med6 := Medicine{
+		Employee: inten2emp,
+		Name:     "Cenor", //ยาต้านเชื้อแบคทีเรีย
+		Type:     med,
+		MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
+		Storage:  b1,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med6)
+
+	//===
+	med7 := Medicine{
+		Employee: inten1emp,
+		Name:     "Tramadol", //ยาบรรเทาอาการปวดรุนแรง
+		Type:     med,
+		MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
+		Storage:  b1,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med7)
+
+	//====
+	med8 := Medicine{
+		Employee: inten2emp,
+		Name:     "Salol et Menthol Mixture", //ยาธาตุน้ำขาว
+		Type:     med,
+		MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
+		Storage:  b2,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med8)
+
+	//====
+	med9 := Medicine{
+		Employee: inten1emp,
+		Name:     "Atorvastatin", //ยา]f++
+		Type:     med,
+		MFD:      time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
+		EXP:      time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
+		Storage:  b2,
+		Amount:   100,
+	}
+	db.Model(&Medicine{}).Create(&med9)
 
 	// //--------------------------------------------------- Medicine Label part -------------------------------------
 
-	// //MedicineUse Data
-	// mu1 := MedicineUse{
-	// 	How_To_Use: "ครั้งละ 1 เม็ด ทุก 4-6 ชั่วโง เวลาปวดหรือมีไข้",
-	// }
-	// db.Model(&MedicineUse{}).Create(&mu1)
+	//MedicineUse Data
+	mu1 := MedicineUse{
+		How_To_Use: "ครั้งละ 1 เม็ด ทุก 4-6 ชั่วโง เวลาปวดหรือมีไข้",
+	}
+	db.Model(&MedicineUse{}).Create(&mu1)
 
-	// mu2 := MedicineUse{
-	// 	How_To_Use: "ครั้งละ 1 เม็ด หลังอาหาร เช้า-กลางวัน-เย็น",
-	// }
-	// db.Model(&MedicineUse{}).Create(&mu2)
+	mu2 := MedicineUse{
+		How_To_Use: "ครั้งละ 1 เม็ด หลังอาหาร เช้า-กลางวัน-เย็น",
+	}
+	db.Model(&MedicineUse{}).Create(&mu2)
 
-	// mu3 := MedicineUse{
-	// 	How_To_Use: "ครั้งละ 1 เม็ด ก่อนอาหาร เช้า-กลางวัน-เย็น",
-	// }
-	// db.Model(&MedicineUse{}).Create(&mu3)
+	mu3 := MedicineUse{
+		How_To_Use: "ครั้งละ 1 เม็ด ก่อนอาหาร เช้า-กลางวัน-เย็น",
+	}
+	db.Model(&MedicineUse{}).Create(&mu3)
 
-	// // Warning Data
-	// w1 := Warning{
-	// 	Medicine_Warning: "ห้ามใช้เกิน 8 เม็ดต่อวัน",
-	// }
-	// db.Model(&Warning{}).Create(&w1)
+	// Warning Data
+	w1 := Warning{
+		Medicine_Warning: "ห้ามใช้เกิน 8 เม็ดต่อวัน",
+	}
+	db.Model(&Warning{}).Create(&w1)
 
-	// w2 := Warning{
-	// 	Medicine_Warning: "ทานยาแล้วอาจรู้สึกง่วงซึม",
-	// }
-	// db.Model(&Warning{}).Create(&w2)
+	w2 := Warning{
+		Medicine_Warning: "ทานยาแล้วอาจรู้สึกง่วงซึม",
+	}
+	db.Model(&Warning{}).Create(&w2)
 
-	// w3 := Warning{
-	// 	Medicine_Warning: "ไม่ควรใช้เกินกว่าขนาดที่ระบุ",
-	// }
-	// db.Model(&Warning{}).Create(&w3)
+	w3 := Warning{
+		Medicine_Warning: "ไม่ควรใช้เกินกว่าขนาดที่ระบุ",
+	}
+	db.Model(&Warning{}).Create(&w3)
 
-	// //MedicineLabel Data
-	// db.Model(&MedicineLabel{}).Create(&MedicineLabel{
-	// 	RecordingDate: time.Now(),
-	// 	Warning:       w1,
-	// 	MedicineUse:   mu1,
-	// 	Employee:      emp5,
-	// })
+	//MedicineLabel Data
+	ml1 := MedicineLabel{
+		RecordingDate: time.Now(),
+		Warning:       w1,
+		MedicineUse:   mu1,
+		Employee:      phar1emp,
+	}
+	db.Model(&MedicineLabel{}).Create(&ml1)
 
-	// db.Model(&MedicineLabel{}).Create(&MedicineLabel{
-	// 	RecordingDate: time.Now(),
-	// 	Warning:       w2,
-	// 	MedicineUse:   mu2,
-	// 	Employee:      emp5,
-	// })
+	ml2 := MedicineLabel{
+		RecordingDate: time.Now(),
+		Warning:       w2,
+		MedicineUse:   mu2,
+		Employee:      phar1emp,
+	}
+	db.Model(&MedicineLabel{}).Create(&ml2)
 
-	// db.Model(&MedicineLabel{}).Create(&MedicineLabel{
-	// 	RecordingDate: time.Now(),
-	// 	Warning:       w3,
-	// 	MedicineUse:   mu3,
-	// 	Employee:      emp5,
-	// })
+	ml3 := MedicineLabel{
+		RecordingDate: time.Now(),
+		Warning:       w3,
+		MedicineUse:   mu3,
+		Employee:      phar2emp,
+	}
+	db.Model(&MedicineLabel{}).Create(&ml3)
 
-	// var e1 Employee
-	// db.Raw("SELECT * FROM employees WHERE name = ?", "Butsakorn").Scan(&e1)
-	// role = Role{
-	// 	Name: "intendant",
-	// }
-	// db.Model(&Role{}).Create(&role)
-	// role = Role{
-	// 	Name: "payment",
-	// }
-	// db.Model(&Role{}).Create(&role)
-	// db.Model(&Role{}).Create(&role)
-	// login1 := Login{
-	// 	User:     "GODCY",
-	// 	Password: string(password),
-	// }
+	//------------------------------------------ Prescription ---------------------------
 
-	// Loginerr1 := db.Model(&Login{}).Create(&login1)
-	// if Loginerr1.Error == nil {
-	// 	db.Model(&Employee{}).Create(&Employee{
-	// 		Name:    "GOD",
-	// 		Surname: "CY",
-	// 		Login:   login1,
-	// 		Role:    role,
-	// 	})
-	// }
+	//patient1
+	patient_1 := Patient{
+		PID:     "P0001",
+		Name:    "กิตติมากร",
+		Surname: "สอนแก้ว",
+		Age:     21,
+		Gender:  "หญิง",
+		Allergy: "ยาแอสไพริน",
+	}
+	db.Model(&Patient{}).Create(&patient_1)
 
-	// tp1 := Types{
-	// 	TypeName: "ชำระเงินสด",
-	// }
-	// db.Model(&Types{}).Create(&tp1)
+	//patient2
+	patient_2 := Patient{
+		PID:     "P0002",
+		Name:    "ยศพล",
+		Surname: "จันทะนาม",
+		Age:     22,
+		Gender:  "ชาย",
+		Allergy: "ไม่แพ้ยาใดๆ",
+	}
+	db.Model(&Patient{}).Create(&patient_2)
 
-	// tp2 := Types{
-	// 	TypeName: "ชำระด้วยการโอน",
-	// }
-	// db.Model(&Types{}).Create(&tp2)
+	//patient3
+	patient_3 := Patient{
+		PID:     "P0003",
+		Name:    "กฤษฎา",
+		Surname: "น้อยผา",
+		Age:     22,
+		Gender:  "ชาย",
+		Allergy: "ไม่แพ้ยาใดๆ",
+	}
+	db.Model(&Patient{}).Create(&patient_3)
 
-	// db.Model(&Receipt{}).Create(&Receipt{
-	// 	//Employee:
-	// 	//PayMedicine:
-	// 	Types: tp1,
+	prescription_1 := Prescription{
+		PrescriptionID: "P00001",
+		Symptom:        "ไข้หวัด",
+		Case_Time:      time.Now(),
+		Employee:       phar1emp,
+		Medicine:       med5,
+		Patient:        patient_1,
+	}
+	db.Model(&Prescription{}).Create(&prescription_1)
 
-	// 	TotalPrice: 100,
-	// 	Receive: 500,
-	// 	Refund: 400,
+	prescription_2 := Prescription{
+		PrescriptionID: "P00002",
+		Symptom:        "ปวดหัว",
+		Case_Time:      time.Now(),
+		Employee:       phar2emp,
+		Medicine:       med1,
+		Patient:        patient_2,
+	}
+	db.Model(&Prescription{}).Create(&prescription_2)
 
-	// //Medicine
-	// medicine_1 := Medicine{
-	// 	Name:    "Paracetamol",
-	// 	Type:    med,
-	// 	MFD:     time.Date(2022, 8, 28, 12, 0, 0, 0, time.UTC),
-	// 	EXP:     time.Date(2023, 8, 28, 12, 0, 0, 0, time.UTC),
-	// 	Storage: b1,
-	// 	Amount:  100,
-	// }
-	// db.Model(&Medicine{}).Create(&medicine_1)
+	prescription_3 := Prescription{
+		PrescriptionID: "P00003",
+		Symptom:        "แผลถลอก",
+		Case_Time:      time.Now(),
+		Employee:       phar1emp,
+		Medicine:       med6,
+		Patient:        patient_2,
+	}
+	db.Model(&Prescription{}).Create(&prescription_3)
 
-	// medicine_2 := Medicine{
-	// 	Name:    "Menopain",
-	// 	Type:    med,
-	// 	MFD:     time.Date(2022, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	EXP:     time.Date(2023, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	Storage: b1,
-	// 	Amount:  100,
-	// }
-	// db.Model(&Medicine{}).Create(&medicine_2)
+	//------------------------ PayMedicine ----------------------------
 
-	// medicine_3 := Medicine{
-	// 	Name:    "b-derm",
-	// 	Type:    med,
-	// 	MFD:     time.Date(2022, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	EXP:     time.Date(2023, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	Storage: b2,
-	// 	Amount:  100,
-	// }
+	payMedicine1 := PayMedicine{
+		Amount:        20,
+		Price:         500,
+		PayDate:       time.Now(),
+		MedicineLabel: ml1,
+		Prescription:  prescription_1,
+		Employee:      phar1emp,
+	}
+	db.Model(&PayMedicine{}).Create(&payMedicine1)
 
-	// db.Model(&Medicine{}).Create(&medicine_3)
+	payMedicine2 := PayMedicine{
+		Amount:        20,
+		Price:         500,
+		PayDate:       time.Now(),
+		MedicineLabel: ml2,
+		Prescription:  prescription_2,
+		Employee:      phar2emp,
+	}
+	db.Model(&PayMedicine{}).Create(&payMedicine2)
 
-	// medicine_4 := Medicine{
-	// 	Name:    "Cetirizine",
-	// 	Type:    nam,
-	// 	MFD:     time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	EXP:     time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	Storage: b2,
-	// 	Amount:  100,
-	// }
-	// db.Model(&Medicine{}).Create(&medicine_4)
+	// --------------------------------- Receipt ----------------------
+	// Payment type
+	tp1 := PaymentTypes{
+		TypeName: "ชำระเงินสด",
+	}
+	db.Model(&PaymentTypes{}).Create(&tp1)
 
-	// patient_1 := Patient{
-	// 	PID:     "P0001",
-	// 	Name:    "กิตติมากร",
-	// 	Surname: "สอนแก้ว",
-	// 	Age:     21,
-	// 	Gender:  "หญิง",
-	// 	Allergy: "ยาแอสไพริน",
-	// }
-	// db.Model(&Patient{}).Create(&patient_1)
+	tp2 := PaymentTypes{
+		TypeName: "ชำระด้วยการโอน",
+	}
+	db.Model(&PaymentTypes{}).Create(&tp2)
 
-	// patient_2 := Patient{
-	// 	PID:     "P0002",
-	// 	Name:    "ยศพล",
-	// 	Surname: "จันทะนาม",
-	// 	Age:     22,
-	// 	Gender:  "ชาย",
-	// 	Allergy: "ไม่แพ้ยาใดๆ",
-	// }
+	//Receipt
+	receipt1 := Receipt{
+		Employee:    pay1emp,
+		Types:       tp1,
+		PayMedicine: payMedicine1,
+		Receive:     20,
+		Refund:      0,
+		TotalPrice:  500,
+	}
+	db.Model(&Receipt{}).Create(&receipt1)
 
-	// db.Model(&Patient{}).Create(&patient_2)
-	// patient_3 := Patient{
-	// 	PID:     "P0003",
-	// 	Name:    "กฤษฎา",
-	// 	Surname: "น้อยผา",
-	// 	Age:     22,
-	// 	Gender:  "ชาย",
-	// 	Allergy: "ไม่แพ้ยาใดๆ",
-	// }
-
-	// db.Model(&Patient{}).Create(&patient_3)
-
-	// prescription_1 := Prescription{
-	// 	PrescriptionID: "P00001",
-	// 	Symptom:        "ไข้หวัด",
-	// 	Case_Time:      time.Now(),
-	// 	Employee:       e1,
-	// 	Medicine:       medicine_1,
-	// 	Patient:        patient_1,
-	// }
-	// db.Model(&Prescription{}).Create(&prescription_1)
-
-	// prescription_2 := Prescription{
-	// 	PrescriptionID: "P00002",
-	// 	Symptom:        "ปวดหัว",
-	// 	Case_Time:      time.Now(),
-	// 	Employee:       e1,
-	// 	Medicine:       medicine_1,
-	// 	Patient:        patient_2,
-	// }
-	// db.Model(&Prescription{}).Create(&prescription_2)
-
-	// prescription_3 := Prescription{
-	// 	PrescriptionID: "P00003",
-	// 	Symptom:        "แผลถลอก",
-	// 	Case_Time:      time.Now(),
-	// 	Employee:       e1,
-	// 	Medicine:       medicine_3,
-	// 	Patient:        patient_2,
-	// }
-	// db.Model(&Prescription{}).Create(&prescription_3)
-
-	// //Medicine
-	// medicine_1 := Medicine{
-	// 	Name:    "Paracetamol",
-	// 	Type:    med,
-	// 	MFD:     time.Date(2022, 8, 28, 12, 0, 0, 0, time.UTC),
-	// 	EXP:     time.Date(2023, 8, 28, 12, 0, 0, 0, time.UTC),
-	// 	Storage: b1,
-	// 	Amount:  100,
-	// }
-	// db.Model(&Medicine{}).Create(&medicine_1)
-
-	// medicine_2 := Medicine{
-	// 	Name:    "Menopain",
-	// 	Type:    med,
-	// 	MFD:     time.Date(2022, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	EXP:     time.Date(2023, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	Storage: b1,
-	// 	Amount:  100,
-	// }
-	// db.Model(&Medicine{}).Create(&medicine_2)
-
-	// medicine_3 := Medicine{
-	// 	Name:    "b-derm",
-	// 	Type:    med,
-	// 	MFD:     time.Date(2022, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	EXP:     time.Date(2023, 8, 30, 12, 0, 0, 0, time.UTC),
-	// 	Storage: b2,
-	// 	Amount:  100,
-	// }
-
-	// db.Model(&Medicine{}).Create(&medicine_3)
-
-	// medicine_4 := Medicine{
-	// 	Name:    "Cetirizine",
-	// 	Type:    nam,
-	// 	MFD:     time.Date(2022, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	EXP:     time.Date(2023, 10, 24, 12, 0, 0, 0, time.UTC),
-	// 	Storage: b2,
-	// 	Amount:  100,
-	// }
-	// db.Model(&Medicine{}).Create(&medicine_4)
-
-	// patient_1 := Patient{
-	// 	PID:     "P0001",
-	// 	Name:    "กิตติมากร",
-	// 	Surname: "สอนแก้ว",
-	// 	Age:     21,
-	// 	Gender:  "หญิง",
-	// 	Allergy: "ยาแอสไพริน",
-	// }
-	// db.Model(&Patient{}).Create(&patient_1)
-
-	// patient_2 := Patient{
-	// 	PID:     "P0002",
-	// 	Name:    "ยศพล",
-	// 	Surname: "จันทะนาม",
-	// 	Age:     22,
-	// 	Gender:  "ชาย",
-	// 	Allergy: "ไม่แพ้ยาใดๆ",
-	// }
-
-	// db.Model(&Patient{}).Create(&patient_2)
-	// patient_3 := Patient{
-	// 	PID:     "P0003",
-	// 	Name:    "กฤษฎา",
-	// 	Surname: "น้อยผา",
-	// 	Age:     22,
-	// 	Gender:  "ชาย",
-	// 	Allergy: "ไม่แพ้ยาใดๆ",
-	// }
-
-	// db.Model(&Patient{}).Create(&patient_3)
-
-	// prescription_1 := Prescription{
-	// 	PrescriptionID: "P00001",
-	// 	Symptom:        "ไข้หวัด",
-	// 	Case_Time:      time.Now(),
-	// 	Employee:       e1,
-	// 	Medicine:       medicine_1,
-	// 	Patient:        patient_1,
-	// }
-	// db.Model(&Prescription{}).Create(&prescription_1)
-
-	// prescription_2 := Prescription{
-	// 	PrescriptionID: "P00002",
-	// 	Symptom:        "ปวดหัว",
-	// 	Case_Time:      time.Now(),
-	// 	Employee:       e1,
-	// 	Medicine:       medicine_1,
-	// 	Patient:        patient_2,
-	// }
-	// db.Model(&Prescription{}).Create(&prescription_2)
-
-	// prescription_3 := Prescription{
-	// 	PrescriptionID: "P00003",
-	// 	Symptom:        "แผลถลอก",
-	// 	Case_Time:      time.Now(),
-	// 	Employee:       e1,
-	// 	Medicine:       medicine_3,
-	// 	Patient:        patient_2,
-	// }
-	// db.Model(&Prescription{}).Create(&prescription_3)
-
-	// 	TotalPrice: 100,
-	// 	Receive: 500,
-	// 	Refund: 400,
-
-	// })
 }

@@ -4,7 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Types struct {
+type PaymentTypes struct {
 	gorm.Model
 
 	TypeName string
@@ -21,7 +21,7 @@ type Receipt struct {
 	Employee   Employee
 
 	TypesID *uint
-	Types   Types
+	Types   PaymentTypes
 
 	PayMedicineID *uint
 	PayMedicine   PayMedicine
