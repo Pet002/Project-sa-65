@@ -65,5 +65,41 @@ func SetupDatabase() {
 		Name: "payment",
 	}
 	db.Model(&Role{}).Create(&role)
+	db.Model(&Role{}).Create(&role)
+	login1 := Login{
+		User:     "GODCY",
+		Password: string(password),
+	}
 
+	Loginerr1 := db.Model(&Login{}).Create(&login1)
+	if Loginerr1.Error == nil {
+		db.Model(&Employee{}).Create(&Employee{
+			Name:    "GOD",
+			Surname: "CY",
+			Login:   login1,
+			Role:    role,
+		})
+	}
+
+
+	tp1 := Types{
+		TypeName: "ชำระเงินสด",
+	}
+	db.Model(&Types{}).Create(&tp1)
+
+	tp2 := Types{
+		TypeName: "ชำระด้วยการโอน",
+	}
+	db.Model(&Types{}).Create(&tp2)
+
+	db.Model(&Receipt{}).Create(&Receipt{
+		//Employee: 
+		//PayMedicine:
+		Types: tp1,
+
+		TotalPrice: 100,
+		Receive: 500,
+		Refund: 400,
+
+	})
 }
