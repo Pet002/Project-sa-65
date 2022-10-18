@@ -7,67 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ------------------------------ Perscription -----------------------------
-// GET /perscriptions
-func ListPerscription(c *gin.Context) {
-	var perscription []entity.Perscription
-	if err := entity.DB().Raw("SELECT * FROM perscriptions").Scan(&perscription).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"data": perscription,
-	})
-
-}
-
-// GET /perscriptions/:id
-func GetPerscription(c *gin.Context) {
-	var perscription entity.Perscription
-	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM perscriptions WHERE id = ?", id).Scan(&perscription).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	c.JSON(
-		http.StatusOK,
-		gin.H{
-			"data": perscription,
-		},
-	)
-}
-
-// POST /perscriptions
-func CreatePerscription(c *gin.Context) {
-	var perscription entity.Perscription
-
-	if err := c.ShouldBindJSON(&perscription); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	if err := entity.DB().Create(&perscription).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusCreated, gin.H{
-		"status": "Create perscription success",
-		"data":   perscription,
-	})
-
-}
-
 //-------------------------------PayMedicine ---------------------------
 
 // List all PayMedicine
@@ -114,7 +53,7 @@ func CreatePayMedicine(c *gin.Context) {
 	var login entity.Login
 	var employee entity.Employee
 	var medicinelabel entity.MedicineLabel
-	var perscription entity.Perscription
+	var prescription entity.Prescription
 
 	//bind data จาก frontend มาไว้ในนี้
 	if err := c.ShouldBindJSON(&payMedicine); err != nil {
@@ -139,7 +78,7 @@ func CreatePayMedicine(c *gin.Context) {
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", payMedicine.PerscriptionID).First(&perscription); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payMedicine.PerscriptionID).First(&prescription); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "perscription not found"})
 		return
 	}
@@ -151,7 +90,7 @@ func CreatePayMedicine(c *gin.Context) {
 		Price:         payMedicine.Price,
 		PayDate:       payMedicine.PayDate,
 		MedicineLabel: medicinelabel,
-		Perscription:  perscription,
+		Prescription:  prescription,
 		Employee:      employee,
 	}
 
