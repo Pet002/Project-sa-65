@@ -160,8 +160,6 @@ function App() {
                 { role === "pharmacist" && <Route path='/medicinepay/create' element={<PayMedicine />} /> }
 
 
-                { role === "admin" && <Route path='/'/> }
-
                 //medicine
                 { role === "intendant" && <Route path='/' element={<Home />} /> }
                 { role === "intendant" && <Route path='/employees' element={<Employees />} /> }

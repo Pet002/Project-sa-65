@@ -6,18 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type MedicineLabel struct {
-	gorm.Model
-	RecordingDate time.Time `valid:"past"`
-
-	MedicineUse string
-	Warning     string
-	EmployeeID  *uint
-	Employee    Employee
-
-	PayMedicines []PayMedicine `gorm:"foreignKey:MedicineLabelID"`
-}
-
 type Perscription struct {
 	gorm.Model
 	CaseTime time.Time `valid:"past"`

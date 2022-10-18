@@ -68,67 +68,6 @@ func CreatePerscription(c *gin.Context) {
 
 }
 
-// ------------------------------ Medicine Lable -----------------------------
-// GET /medicinelabels
-func ListMedicineLabel(c *gin.Context) {
-	var medicineLabel []entity.MedicineLabel
-	if err := entity.DB().Raw("SELECT * FROM medicine_labels").Scan(&medicineLabel).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"data": medicineLabel,
-	})
-
-}
-
-// GET /medicinelabels/:id
-func GetMedicineLabel(c *gin.Context) {
-	var medicineLabel entity.MedicineLabel
-	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM medicine_labels WHERE id = ?", id).Scan(&medicineLabel).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	c.JSON(
-		http.StatusOK,
-		gin.H{
-			"data": medicineLabel,
-		},
-	)
-}
-
-// POST /medicinelabels
-func CreateMedicineLabel(c *gin.Context) {
-	var medicineLabel entity.MedicineLabel
-
-	if err := c.ShouldBindJSON(&medicineLabel); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	if err := entity.DB().Create(&medicineLabel).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusCreated, gin.H{
-		"status": "Create medicineLabel success",
-		"data":   medicineLabel,
-	})
-
-}
-
 //-------------------------------PayMedicine ---------------------------
 
 // List all PayMedicine
