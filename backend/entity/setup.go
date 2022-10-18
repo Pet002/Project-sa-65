@@ -27,21 +27,26 @@ func SetupDatabase() {
 	// Migrate the schema
 
 	database.AutoMigrate(
+		//Medicine label
 		&MedicineUse{},
 		&Warning{},
 		&MedicineLabel{},
+		//Employee system
 		&Login{},
 		&Role{},
 		&Employee{},
+		//Prescription
 		&Prescription{},
-		&Medicine{},
 		&Patient{},
+		//Medicine
 		&Type{},
 		&Storage{},
 		&Medicine{},
+		//PayMedicine
 		&PayMedicine{},
-		&MedicineLabel{},
-		&Prescription{},
+		//Receipt
+		&Types{},
+		&Receipt{},
 	)
 
 	db = database
