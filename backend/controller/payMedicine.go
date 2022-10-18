@@ -78,7 +78,7 @@ func CreatePayMedicine(c *gin.Context) {
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", payMedicine.PerscriptionID).First(&prescription); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", payMedicine.PrescriptionID).First(&prescription); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "perscription not found"})
 		return
 	}
