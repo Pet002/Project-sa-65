@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"net/http"
+	"github.com/tonphaii/Project-sa-65/entity"
 
-	"github.com/Pet002/Project-sa-65/entity"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,11 +34,12 @@ func CreatePrescription(c *gin.Context) {
 	}
 
 	pr := entity.Prescription{
-		Patient:   patient,                // โยงความสัมพันธ์กับ Entity Resolution
-		Medicine:  medicine,               // โยงความสัมพันธ์กับ Entity Video
-		Employee:  employee,               // โยงความสัมพันธ์กับ Entity Playlist
-		Symptom:   prescription.Symptom,   // โยงความสัมพันธ์กับ Entity
-		Case_Time: prescription.Case_Time, // ตั้งค่าฟิลด์ watchedTime
+		PrescriptionID: prescription.PrescriptionID,
+		Patient:        patient,                // โยงความสัมพันธ์กับ Entity Resolution
+		Medicine:       medicine,               // โยงความสัมพันธ์กับ Entity Video
+		Employee:       employee,               // โยงความสัมพันธ์กับ Entity Playlist
+		Symptom:        prescription.Symptom,   // โยงความสัมพันธ์กับ Entity
+		Case_Time:      prescription.Case_Time, // ตั้งค่าฟิลด์ watchedTime
 	}
 
 	//บันทึก
