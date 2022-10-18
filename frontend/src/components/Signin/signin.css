@@ -6,19 +6,22 @@
 }
 
 .form-page{
-    width: 71vw;
+    width: 70vw;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .from-frame{
-    width: 30vw;
-
+    width: 30rem;
 }
 
 
-
+.img-box{
+    height: 100vh;
+    width: 30vw;
+    object-fit: cover;
+}
 
 .form-in{
     display: flex;
@@ -33,4 +36,30 @@
 
 .submit {
     margin: 2rem;
+    border-radius: 50px;
+}
+
+
+
+
+@media screen and (max-width: 1200px ) {
+    .form-page{
+        width: 50vw;
+    }
+    
+    .img-box{
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .img-box{
+        display: none;
+    }
+    .form-page{
+        width: 100vw;
+    }
+    .from-frame{
+        width: 20rem;
+    }
 }

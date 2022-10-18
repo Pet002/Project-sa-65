@@ -63,6 +63,27 @@ func main() {
 			protected.POST("/employee", controller.CreateEmployee)
 			protected.PATCH("/employee", controller.UpdateEmployee)
 			protected.DELETE("/employee/:id", controller.DeleteEmployee)
+
+			//MedicineLabel
+			protected.GET("/medicine_labels", controller.ListMedicineLabel)
+			protected.GET("/medicine_label/:id", controller.GetMedicineLabel)
+			protected.POST("/medicine_label", controller.CreateMedicineLabel)
+			protected.PATCH("/medicine_label", controller.UpdateMedicineLabel)
+			protected.DELETE("/medicine_label/:id", controller.DeleteMedicineLabel)
+
+			//MedicineUse
+			protected.GET("/medicine_uses", controller.ListMedicineUse)
+			protected.GET("/medicine_use/:id", controller.GetMedicineUse)
+			protected.POST("/medicine_use", controller.CreateMedicineUse)
+			protected.PATCH("/medicine_use", controller.UpdateMedicineUse)
+			protected.DELETE("/medicine_use/:id", controller.DeleteMedicineUse)
+
+			//Warning
+			protected.GET("/warnings", controller.ListWarning)
+			protected.GET("/warning/:id", controller.GetWarning)
+			protected.POST("/warning", controller.CreateWarning)
+			protected.PATCH("/warning", controller.UpdateWarning)
+			protected.DELETE("/warning/:id", controller.DeleteWarning)
 		}
 	}
 
@@ -73,6 +94,28 @@ func main() {
 		{
 			//พี่เป้ กับ พี่ปาล์ม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
+			protected.GET("/employees", controller.ListEmployee)
+
+			// Storage Routes
+			protected.GET("/storage", controller.ListStorage)
+			protected.GET("/storage/:id", controller.GetStorage)
+			protected.POST("/storage", controller.CreateStorage)
+			protected.PATCH("/storage", controller.UpdateStorage)
+			protected.DELETE("/storage/:id", controller.DeleteStorage)
+
+			// Type Routes
+			protected.GET("/type", controller.ListType)
+			protected.GET("/type/:id", controller.GetType)
+			protected.POST("/type", controller.CreateType)
+			protected.PATCH("/type", controller.UpdateType)
+			protected.DELETE("/type/:id", controller.DeleteType)
+
+			//Medicine Routes
+			protected.GET("/medicine", controller.ListMedicine)
+			protected.GET("/medicine/:id", controller.GetMedicine)
+			protected.POST("/medicine", controller.CreateMedicine)
+			protected.PATCH("/medicine", controller.UpdateMedicine)
+			protected.DELETE("/medicine/:id", controller.DeleteMedicine)
 
 		}
 	}
@@ -84,6 +127,23 @@ func main() {
 		{
 			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /phamacist/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
+			protected.GET("/employees", controller.ListEmployee)
+
+			//perscriptions
+			protected.GET("/perscriptions", controller.ListPerscription)
+			protected.GET("/perscriptions/:id", controller.GetPerscription)
+			protected.POST("/perscriptions", controller.CreatePerscription)
+			//medicine Label
+			protected.GET("/medicinelabels", controller.ListMedicineLabel)
+			protected.GET("/medicinelabels/:id", controller.GetMedicineLabel)
+			protected.POST("/medicinelabels", controller.CreateMedicineLabel)
+
+			//pay Medicines
+			protected.GET("/paymedicines", controller.ListPayMedicine)
+			protected.GET("/paymedicines/:id", controller.GetPayMedicine)
+			protected.POST("/paymedicines", controller.CreatePayMedicine)
+			protected.PATCH("/paymedicines", controller.UpdatePayMedicine)
+			protected.DELETE("/paymedicines/:id", controller.DeletePayMedicine)
 
 		}
 	}

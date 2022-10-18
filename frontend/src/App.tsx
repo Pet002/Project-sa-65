@@ -13,6 +13,13 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from './navigations/NavBar';
 import DrawerBar from './navigations/DrawerBar';
 import { Roletest } from './components/Roletest';
+import PayMedicine from './components/PayMedicine';
+import PayMedicineHistory from './components/PayMedicineHistory';
+import Employees from './components/Employees';
+import { Home } from './components/Home';
+import { EmployeeCreate } from './components/EmployeeCreate';
+import { Medicine } from './components/Medicine';
+import { MedicineCrate } from './components/MedicineCreate';
 
 
 const drawerWidth = 240;
@@ -136,6 +143,7 @@ function App() {
             <CssBaseline />
             <Navbar open={open} onClick={handleDrawerOpen} />
             <DrawerBar open={open} drawerWidth={drawerWidth} handleDrawerClose={handleDrawerClose} role={role} theme={theme} />
+            
             <Main open={open}>
               <DrawerHeader />
               {/* function Route */}
@@ -143,9 +151,23 @@ function App() {
 
                 {/* Add element here!!!! and role  */}
                 { role === "admin" && <Route path='/' element={<Roletest />} /> }
+                { role === "admin" && <Route path='/dashboard' element={<Roletest />} /> }
                 { role === "admin" && <Route path='/'/> }
                 { role === "admin" && <Route path='/'/> }
-                { role === "admin" && <Route path='/'/> }
+
+                { role === "pharmacist" && <Route path='/' /> }
+                { role === "pharmacist" && <Route path='/medicinepay' element={<PayMedicineHistory />} /> }
+                { role === "pharmacist" && <Route path='/medicinepay/create' element={<PayMedicine />} /> }
+
+
+                //medicine
+                { role === "intendant" && <Route path='/' element={<Home />} /> }
+                { role === "intendant" && <Route path='/employees' element={<Employees />} /> }
+                { role === "intendant" && <Route path='/employee/create' element={<EmployeeCreate />} /> }
+                { role === "intendant" && <Route path='/medicines' element={<Medicine />} /> }
+                { role === "intendant" && <Route path='/medicine/create' element={<MedicineCrate />} /> }
+
+                
                 
               </Routes>
             </Main>

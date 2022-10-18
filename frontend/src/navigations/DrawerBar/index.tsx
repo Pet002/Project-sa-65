@@ -7,6 +7,10 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useNavigate } from 'react-router-dom';
 
+import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+
 
 
 export default function DrawerBar({ role, drawerWidth, handleDrawerClose, open , theme}: any) {
@@ -32,13 +36,18 @@ export default function DrawerBar({ role, drawerWidth, handleDrawerClose, open ,
         } else if (role === "intendant") {
             menu = [
                 //{ "text": "A", "icon": <InboxIcon />, "link": "/" } form 
+                { "text" : "หน้าหลัก",icon: <HomeIcon />, "link": "/"},
+                { "text" : "บันทึกข้อมูลเจ้าหน้าที่", icon: <AccountCircleIcon />,"link": "/employees"},
+                { "text" : "บันทึกข้อมูลยา", icon: <MedicationIcon />,"link": "/medicines"},
 
             ]
         }
         else if (role === "pharmacist") {
             menu = [
-                { "text": "Dashboard", "icon": <DashboardIcon />, "link": "/" },
-                { "text": "Medicine Pay", "icon": <MedicationIcon />, "link": "/medicinepay" },
+                { "text": "หน้าแรก", "icon": <DashboardIcon />, "link": "/" },
+                { "text": "จ่ายยา", "icon": <MedicationIcon />, "link": "/medicinepay" },
+                
+
             ]
         }
         else if (role === "payment") {
