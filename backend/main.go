@@ -137,6 +137,14 @@ func main() {
 			protected.POST("/prescriptions", controller.CreatePrescription)
 			protected.PATCH("/prescriptions", controller.UpdatePrescription)
 			protected.DELETE("/prescriptions/:id", controller.DeletePrescription)
+
+			//patients
+			protected.GET("/patients", controller.ListPatient)
+			protected.GET("/patients/:id", controller.GetPatient)
+			protected.POST("/patients", controller.CreatePatient)
+			protected.PATCH("/patients/:id", controller.UpdatePatient)
+			protected.DELETE("/patients/:id", controller.DeletePatient)
+
 			//medicine Label
 			protected.GET("/medicinelabels", controller.ListMedicineLabel)
 			protected.GET("/medicinelabels/:id", controller.GetMedicineLabel)

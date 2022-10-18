@@ -13,7 +13,7 @@ import (
 // GET /paymedicines
 func ListPayMedicine(c *gin.Context) {
 	var paymedicines []entity.PayMedicine
-	if err := entity.DB().Raw("SELECT * FROM pay_medicines").Scan(&paymedicines).Error; err != nil {
+	if err := entity.DB().Preload("MedicineLabel").Preload("Prescription").Preload("Employee").Raw("SELECT * FROM pay_medicines").Find(&paymedicines).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
