@@ -39,6 +39,9 @@ type Employee struct {
 	Role Role
 
 	//For Enter Relation
-	PayMedicines []PayMedicine `gorm:"foreignKey:EmployeeID"`
-	Medicine     []Medicine    `gorm:"foreignKey:EmployeeID"`
+	PayMedicines  []PayMedicine   `gorm:"foreignKey:EmployeeID"`
+	Medicine      []Medicine      `gorm:"foreignKey:EmployeeID"`
+	Prescription  []Prescription  `gorm:"foreignKey:EmployeeID"`
+	Receipt       []Receipt       `gorm:"foreignKey:EmployeeID"`
+	MedicineLabel []MedicineLabel `gorm:"foreignKey:EmployeeID"`
 }

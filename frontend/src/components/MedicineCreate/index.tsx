@@ -1,11 +1,11 @@
 import { Container, Box, Typography, Button, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Divider, FormControl, Grid, Select, Snackbar, TextField } from '@mui/material';
 
 import React, { useEffect, useState } from 'react'
-import { MedicineInterface } from '../../modules/IMedicine';
+import { MedicineInterface } from '../../models/IMedicine';
 import { Link as RouterLink } from "react-router-dom";
-import { EmployeeInterface } from '../../modules/IEmployees';
-import { StorageInterface } from '../../modules/IStorage';
-import { TypeInterface } from '../../modules/IType';
+import { EmployeeInterface } from '../../models/IEmployee';
+import { StorageInterface } from '../../models/IStorage';
+import { TypeInterface } from '../../models/IType';
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';

@@ -1,6 +1,6 @@
 import { EmployeeInterface } from "./IEmployee";
 import { MedicineLabelInterface } from "./IMedicineLabel";
-import { PerscriptionInterface } from "./IPerscription";
+import { PerscriptionInterface } from "./IPrescription";
 
 export interface PayMedicineInterface {
 

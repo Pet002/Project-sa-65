@@ -1,10 +1,10 @@
 import { AlertProps, Box, Button, Container, Divider, FormControl, Grid, Paper, Snackbar, TextField, Typography } from '@mui/material';
 import { sign } from 'crypto';
 import React, { useState } from 'react'
-import { EmployeeInterface } from '../../modules/IEmployees';
-import { SigninInterface } from '../../modules/ISingin';
+import { EmployeeInterface } from '../../models/IEmployee';
+import { SigninInterface } from '../../models/ISingin';
 import { Link as RouterLink } from "react-router-dom";
-import { LoginInterface } from '../../modules/ILogin';
+import { LoginInterface } from '../../models/ILogin';
 
 
 function Alert(props: AlertProps) {

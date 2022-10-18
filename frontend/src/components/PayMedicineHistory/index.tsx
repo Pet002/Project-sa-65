@@ -4,14 +4,14 @@ import React, { useEffect } from 'react'
 import { EmployeeInterface } from '../../models/IEmployee'
 import { MedicineLabelInterface } from '../../models/IMedicineLabel'
 import { PayMedicineInterface } from '../../models/IPayMedicine'
-import { PerscriptionInterface } from '../../models/IPerscription'
+import { PrescriptionInterface } from '../../models/IPrescription'
 import { Link as RouterLink } from "react-router-dom";
 
 export default function PayMedicineHistory() {
 
     const [payMedicine, setPayMedicine] = React.useState<PayMedicineInterface[]>([])
     const [employee, setEmployee] = React.useState<EmployeeInterface[]>([])
-    const [perscription, setPerscription] = React.useState<PerscriptionInterface[]>([])
+    const [perscription, setPerscription] = React.useState<PrescriptionInterface[]>([])
     const [medicineLabel, setMedicineLabel] = React.useState<MedicineLabelInterface[]>([])
 
 

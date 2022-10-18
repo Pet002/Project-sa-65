@@ -1,7 +1,7 @@
 import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Box, Button, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Link as RouterLink } from "react-router-dom";
-import { EmployeeInterface } from '../../modules/IEmployees';
+import { EmployeeInterface } from '../../models/IEmployee';
 
 export default function Employees() {
     const [employee, setEmployee] = useState<EmployeeInterface[]>([]);

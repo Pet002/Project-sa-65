@@ -1,7 +1,7 @@
 import { Container, Box, Typography, Button, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react'
-import { MedicineInterface } from '../../modules/IMedicine';
+import { MedicineInterface } from '../../models/IMedicine';
 import { Link as RouterLink } from "react-router-dom";
 
 export const Medicine = () => {

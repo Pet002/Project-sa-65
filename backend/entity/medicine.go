@@ -37,4 +37,7 @@ type Medicine struct {
 
 	StorageID *uint
 	Storage   Storage
+
+	//Link to another
+	Prescriptions []Prescription `gorm:"foreignKey:MedicineID"`
 }

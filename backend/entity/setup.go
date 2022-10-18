@@ -150,13 +150,13 @@ func SetupDatabase() {
 	// db.Model(&Role{}).Create(&role)
 
 	// login_5 := Login{
-	// 	User:     "payment",
+	// 	User:     "pharmacist",
 	// 	Password: string(password),
 	// }
 	// Loginerr5 := db.Model(&Login{}).Create(&login_5)
 
 	// emp5 := Employee{
-	// 	Name:    "payment",
+	// 	Name:    "pharmacist",
 	// 	Surname: "Test",
 	// 	Login:   login_5,
 	// 	Role:    role,

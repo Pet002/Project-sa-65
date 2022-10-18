@@ -35,4 +35,7 @@ type Prescription struct {
 
 	PatientID *uint
 	Patient   Patient
+
+	//Link to Pay Medicine
+	PayMedicines []PayMedicine `gorm:"foreignKey:PrescriptionID"`
 }
