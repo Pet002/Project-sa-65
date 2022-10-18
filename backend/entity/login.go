@@ -40,4 +40,5 @@ type Employee struct {
 
 	//For Enter Relation
 	PayMedicines []PayMedicine `gorm:"foreignKey:EmployeeID"`
+	Medicine     []Medicine    `gorm:"foreignKey:EmployeeID"`
 }

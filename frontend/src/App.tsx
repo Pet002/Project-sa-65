@@ -15,6 +15,11 @@ import DrawerBar from './navigations/DrawerBar';
 import { Roletest } from './components/Roletest';
 import PayMedicine from './components/PayMedicine';
 import PayMedicineHistory from './components/PayMedicineHistory';
+import Employees from './components/Employees';
+import { Home } from './components/Home';
+import { EmployeeCreate } from './components/EmployeeCreate';
+import { Medicine } from './components/Medicine';
+import { MedicineCrate } from './components/MedicineCreate';
 
 
 const drawerWidth = 240;
@@ -155,6 +160,16 @@ function App() {
                 { role === "pharmacist" && <Route path='/medicinepay/create' element={<PayMedicine />} /> }
 
 
+                { role === "admin" && <Route path='/'/> }
+
+                //medicine
+                { role === "intendant" && <Route path='/' element={<Home />} /> }
+                { role === "intendant" && <Route path='/employees' element={<Employees />} /> }
+                { role === "intendant" && <Route path='/employee/create' element={<EmployeeCreate />} /> }
+                { role === "intendant" && <Route path='/medicines' element={<Medicine />} /> }
+                { role === "intendant" && <Route path='/medicine/create' element={<MedicineCrate />} /> }
+
+                
                 
               </Routes>
             </Main>
