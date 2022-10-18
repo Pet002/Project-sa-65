@@ -94,6 +94,28 @@ func main() {
 		{
 			//พี่เป้ กับ พี่ปาล์ม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /medicine/(...Route)
 			protected.GET("/employee/:id", controller.GetEmployee)
+			protected.GET("/employees", controller.ListEmployee)
+
+			// Storage Routes
+			protected.GET("/storage", controller.ListStorage)
+			protected.GET("/storage/:id", controller.GetStorage)
+			protected.POST("/storage", controller.CreateStorage)
+			protected.PATCH("/storage", controller.UpdateStorage)
+			protected.DELETE("/storage/:id", controller.DeleteStorage)
+
+			// Type Routes
+			protected.GET("/type", controller.ListType)
+			protected.GET("/type/:id", controller.GetType)
+			protected.POST("/type", controller.CreateType)
+			protected.PATCH("/type", controller.UpdateType)
+			protected.DELETE("/type/:id", controller.DeleteType)
+
+			//Medicine Routes
+			protected.GET("/medicine", controller.ListMedicine)
+			protected.GET("/medicine/:id", controller.GetMedicine)
+			protected.POST("/medicine", controller.CreateMedicine)
+			protected.PATCH("/medicine", controller.UpdateMedicine)
+			protected.DELETE("/medicine/:id", controller.DeleteMedicine)
 
 		}
 	}
