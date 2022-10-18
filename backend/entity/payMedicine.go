@@ -16,7 +16,7 @@ type PayMedicine struct {
 	MedicineLabelID *uint
 	MedicineLabel   MedicineLabel
 
-	PrescriptionID *uint `gorm:"uniqueIndex"` //set Unique for 1 to 1 relational database
+	PerscriptionID *uint `gorm:"uniqueIndex"` //set Unique for 1 to 1 relational database
 	Prescription   Prescription
 
 	EmployeeID *uint
