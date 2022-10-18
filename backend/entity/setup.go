@@ -9,17 +9,27 @@ import (
 var db *gorm.DB
 
 func DB() *gorm.DB {
+
 	return db
+
 }
 
 func SetupDatabase() {
+
 	database, err := gorm.Open(sqlite.Open("MedicineRoom.db"), &gorm.Config{})
 
 	if err != nil {
+
 		panic("failed to connect database")
+
 	}
 
+	// Migrate the schema
+
 	database.AutoMigrate(
+		&MedicineUse{},
+		&Warning{},
+		&MedicineLabel{},
 		&Login{},
 		&Role{},
 		&Employee{},
