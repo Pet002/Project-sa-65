@@ -105,10 +105,44 @@ func SetupDatabase() {
 	}
 	db.Model(&Role{}).Create(&role)
 
+	login_4 := Login{
+		User:     "pharmacist",
+		Password: string(password),
+	}
+	Loginerr4 := db.Model(&Login{}).Create(&login_4)
+
+	emp4 := Employee{
+		Name:    "Pichanon",
+		Surname: "Suwannarat",
+		Login:   login_4,
+		Role:    role,
+	}
+	if Loginerr4.Error == nil {
+		db.Model(&Employee{}).Create(&emp4)
+	}
+
 	role = Role{
 		Name: "payment",
 	}
 	db.Model(&Role{}).Create(&role)
+
+	login_5 := Login{
+		User:     "pharmacist",
+		Password: string(password),
+	}
+	Loginerr5 := db.Model(&Login{}).Create(&login_5)
+
+	emp5 := Employee{
+		Name:    "Pichanon",
+		Surname: "Suwannarat",
+		Login:   login_5,
+		Role:    role,
+	}
+	if Loginerr5.Error == nil {
+		db.Model(&Employee{}).Create(&emp5)
+	}
+
+	//-------------------------------------- medicine ----------------------------------------------
 
 	//----------Type-------------------
 	tha := Type{
@@ -229,4 +263,61 @@ func SetupDatabase() {
 		Storage:  b2,
 		Amount:   100,
 	})*/
+
+	//--------------------------------------------------- Medicine Label part -------------------------------------
+
+	//MedicineUse Data
+	mu1 := MedicineUse{
+		How_To_Use: "ครั้งละ 1 เม็ด ทุก 4-6 ชั่วโง เวลาปวดหรือมีไข้",
+	}
+	db.Model(&MedicineUse{}).Create(&mu1)
+
+	mu2 := MedicineUse{
+		How_To_Use: "ครั้งละ 1 เม็ด หลังอาหาร เช้า-กลางวัน-เย็น",
+	}
+	db.Model(&MedicineUse{}).Create(&mu2)
+
+	mu3 := MedicineUse{
+		How_To_Use: "ครั้งละ 1 เม็ด ก่อนอาหาร เช้า-กลางวัน-เย็น",
+	}
+	db.Model(&MedicineUse{}).Create(&mu3)
+
+	// Warning Data
+	w1 := Warning{
+		Medicine_Warning: "ห้ามใช้เกิน 8 เม็ดต่อวัน",
+	}
+	db.Model(&Warning{}).Create(&w1)
+
+	w2 := Warning{
+		Medicine_Warning: "ทานยาแล้วอาจรู้สึกง่วงซึม",
+	}
+	db.Model(&Warning{}).Create(&w2)
+
+	w3 := Warning{
+		Medicine_Warning: "ไม่ควรใช้เกินกว่าขนาดที่ระบุ",
+	}
+	db.Model(&Warning{}).Create(&w3)
+
+	//MedicineLabel Data
+	db.Model(&MedicineLabel{}).Create(&MedicineLabel{
+		RecordingDate: time.Now(),
+		Warning:       w1,
+		MedicineUse:   mu1,
+		Employee:      emp5,
+	})
+
+	db.Model(&MedicineLabel{}).Create(&MedicineLabel{
+		RecordingDate: time.Now(),
+		Warning:       w2,
+		MedicineUse:   mu2,
+		Employee:      emp5,
+	})
+
+	db.Model(&MedicineLabel{}).Create(&MedicineLabel{
+		RecordingDate: time.Now(),
+		Warning:       w3,
+		MedicineUse:   mu3,
+		Employee:      emp5,
+	})
+
 }
