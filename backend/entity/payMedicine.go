@@ -6,20 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type Perscription struct {
-	gorm.Model
-	CaseTime time.Time `valid:"past"`
-
-	Symptom  string
-	Medicine string
-	Patient  string
-
-	EmployeeID *uint
-	Employee   Employee
-
-	PayMedicine []PayMedicine `gorm:"foreignKey:PerscriptionID"`
-}
-
 type PayMedicine struct {
 	gorm.Model
 
@@ -30,8 +16,8 @@ type PayMedicine struct {
 	MedicineLabelID *uint
 	MedicineLabel   MedicineLabel
 
-	PerscriptionID *uint `gorm:"uniqueIndex"` //set Unique for 1 to 1 relational database
-	Perscription   Perscription
+	PrescriptionID *uint `gorm:"uniqueIndex"` //set Unique for 1 to 1 relational database
+	Prescription   Prescription
 
 	EmployeeID *uint
 	Employee   Employee
