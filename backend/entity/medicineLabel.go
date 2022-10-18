@@ -35,4 +35,7 @@ type MedicineLabel struct {
 	// MedicineUseID ทำหน้าที่เป็น FK
 	MedicineUseID *uint
 	MedicineUse   MedicineUse
+
+	//Link to
+	PayMedicine []PayMedicine `gorm:"foreignKey:MedicineLabelID"`
 }

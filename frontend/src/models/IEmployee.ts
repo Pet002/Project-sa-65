@@ -3,7 +3,7 @@ import { RoleInterface } from "./IRole";
 
 export interface EmployeeInterface{
 
-    Employee_ID: string,
+    ID: number,
     Name: string;
     Surname: string;
     

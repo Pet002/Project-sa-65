@@ -1,10 +1,20 @@
-export interface MedicineInterface{
-    Medicine_ID: number,
-    Name_Medicine: string,
-    Type_Medicine: string,
-    MFD: Date,
-    EXP: Date,
-    Amount: number,
-    Storage_id: string,
+import { StorageInterface } from "./IStorage";
+import { TypeInterface } from "./IType";
+import { EmployeeInterface } from "./IEmployee";
 
-} 
+export interface MedicineInterface {
+    ID: number,
+    Name:   string,
+	MFD:    Date,
+	EXP:    Date,
+	Amount: number,
+
+	EmployeeID: number,
+	Employee:   EmployeeInterface,
+
+	TypeID: number,
+	Type:   TypeInterface,
+
+	StorageID: number,
+	Storage:    StorageInterface
+}

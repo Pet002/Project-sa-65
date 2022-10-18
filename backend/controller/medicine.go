@@ -12,7 +12,7 @@ import (
 
 // POST /type
 func CreateType(c *gin.Context) {
-	var MedicineType entity.Type
+	var MedicineType entity.MedicineType
 	if err := c.ShouldBindJSON(&MedicineType); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -27,7 +27,7 @@ func CreateType(c *gin.Context) {
 
 // GET /type/:id
 func GetType(c *gin.Context) {
-	var MedicineType entity.Type
+	var MedicineType entity.MedicineType
 	id := c.Param("id")
 	if err := entity.DB().Raw("SELECT * FROM types WHERE id = ?", id).Scan(&MedicineType).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -39,7 +39,7 @@ func GetType(c *gin.Context) {
 
 // GET /type
 func ListType(c *gin.Context) {
-	var MedicineType []entity.Type
+	var MedicineType []entity.MedicineType
 	if err := entity.DB().Raw("SELECT * FROM types").Scan(&MedicineType).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -61,7 +61,7 @@ func DeleteType(c *gin.Context) {
 
 // PATCH /type
 func UpdateType(c *gin.Context) {
-	var MedicineType entity.Type
+	var MedicineType entity.MedicineType
 	if err := c.ShouldBindJSON(&MedicineType); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -158,7 +158,7 @@ func CreateMedicine(c *gin.Context) {
 	var medicine entity.Medicine
 	var employee entity.Employee
 	var storage entity.Storage
-	var medicine_type entity.Type
+	var medicine_type entity.MedicineType
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร medicine
 	if err := c.ShouldBindJSON(&medicine); err != nil {
