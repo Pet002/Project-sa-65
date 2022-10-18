@@ -126,6 +126,8 @@ func main() {
 		protected := pharmacistApi.Use(middlewares.AuthorizedPharmacist())
 		{
 			//เพชร พี่แบม และพี่แบม เพิ่ม API ตรงส่วนนี้ ในกรณีเรียกใช้ ให้เรียกใช้จาก /phamacist/(...Route)
+
+			//------------------------------ Part Petch ------------------------------
 			protected.GET("/employee/:id", controller.GetEmployee)
 			protected.GET("/employees", controller.ListEmployee)
 
@@ -133,10 +135,14 @@ func main() {
 			protected.GET("/prescriptions", controller.ListPrescription)
 			protected.GET("/prescriptions/:id", controller.GetPrescription)
 			protected.POST("/prescriptions", controller.CreatePrescription)
+			protected.PATCH("/prescriptions", controller.UpdatePrescription)
+			protected.DELETE("/prescriptions/:id", controller.DeletePrescription)
 			//medicine Label
 			protected.GET("/medicinelabels", controller.ListMedicineLabel)
 			protected.GET("/medicinelabels/:id", controller.GetMedicineLabel)
 			protected.POST("/medicinelabels", controller.CreateMedicineLabel)
+			protected.PATCH("/medicinelabels", controller.UpdateMedicineLabel)
+			protected.DELETE("/medicinelabels/:id", controller.DeleteMedicineLabel)
 
 			//pay Medicines
 			protected.GET("/paymedicines", controller.ListPayMedicine)
