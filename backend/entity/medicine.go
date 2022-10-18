@@ -6,6 +6,22 @@ import (
 	"gorm.io/gorm"
 )
 
+// types
+type Type struct {
+	gorm.Model
+	Tmedicine  string
+	Utilzation string
+
+	Medicine []Medicine `gorm:"foreignKey:TypeID"`
+}
+
+type Storage struct {
+	gorm.Model
+	Name string
+
+	Medicine []Medicine `gorm:"foreignKey:StorageID"`
+}
+
 type Medicine struct {
 	gorm.Model
 	Name   string

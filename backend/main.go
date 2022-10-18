@@ -130,9 +130,9 @@ func main() {
 			protected.GET("/employees", controller.ListEmployee)
 
 			//perscriptions
-			protected.GET("/perscriptions", controller.ListPerscription)
-			protected.GET("/perscriptions/:id", controller.GetPerscription)
-			protected.POST("/perscriptions", controller.CreatePerscription)
+			protected.GET("/prescriptions", controller.ListPrescription)
+			protected.GET("/prescriptions/:id", controller.GetPrescription)
+			protected.POST("/prescriptions", controller.CreatePrescription)
 			//medicine Label
 			protected.GET("/medicinelabels", controller.ListMedicineLabel)
 			protected.GET("/medicinelabels/:id", controller.GetMedicineLabel)
