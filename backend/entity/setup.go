@@ -13,7 +13,7 @@ func DB() *gorm.DB {
 }
 
 func SetupDatabase() {
-	database, err := gorm.Open(sqlite.Open("MedicineRoom.db"), &gorm.Config{})
+	database, err := gorm.Open(sqlite.Open("MediciineRoom.db"), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
@@ -23,6 +23,9 @@ func SetupDatabase() {
 		&Login{},
 		&Role{},
 		&Employee{},
+		&Prescription{},
+		&Medicine{},
+		&Patient{},
 	)
 
 	db = database

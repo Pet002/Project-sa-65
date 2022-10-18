@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"github.com/Pet002/Project-sa-65/entity"
 	"github.com/gin-gonic/gin"
-	"github.com/tonphaii/Project-sa-65/entity"
 
 	"net/http"
 )
