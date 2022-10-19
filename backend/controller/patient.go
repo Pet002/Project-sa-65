@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/Pet002/Project-sa-65/entity"
 	"github.com/gin-gonic/gin"
+	"github.com/tonphaii/Project-sa-65/entity"
 
 	"net/http"
 )
@@ -15,22 +15,22 @@ func CreatePatients(c *gin.Context) {
 		return
 	}
 
-	p := &entity.Patient{
+	// p := &entity.Patient{
 
-		PID:     patient.PID,
-		Name:    patient.Name,
-		Surname: patient.Surname,
-		Age:     patient.Age,
-		Gender:  patient.Gender,
-		Allergy: patient.Allergy,
-	}
+	// 	PID:     patient.PID,
+	// 	Name:    patient.Name,
+	// 	Surname: patient.Surname,
+	// 	Age:     patient.Age,
+	// 	Gender:  patient.Gender,
+	// 	Allergy: patient.Allergy,
+	// }
 
-	if err := entity.DB().Create(&p).Error; err != nil {
+	if err := entity.DB().Create(&patient).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": p})
+	c.JSON(http.StatusOK, gin.H{"data": patient})
 }
 
 func GetPatients(c *gin.Context) {
