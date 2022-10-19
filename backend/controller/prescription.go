@@ -25,11 +25,11 @@ func CreatePrescription(c *gin.Context) {
 	}
 
 	if tx := entity.DB().Where("id = ?", prescription.MedicineID).First(&medicine); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "patient not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "medicine not found"})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", prescription.EmployeeID).First(&employee); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "patient not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "employee not found"})
 		return
 	}
 
